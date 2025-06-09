@@ -28,6 +28,7 @@ GSw_H2CT,Switch to turn on/off H2CT and H2CC techs,1,,0,,,,,,,,,,,,,,,,,,,,,,,,0
 GSw_H2_SMR,Turn on/off steam methane reforming (SMR) for hydrogen production,0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 GSw_NukeNoRetireYear,If GSw_NukeNoRetire is enabled nuclear cannot retire through the end of this year,2032,,,,,,,,,,,,,,,,2060,,,,,,,,,,,,,,,,,,,,,,,,2060,,,,,,,,,,,2060,2060,2060,2060,2060,2060,2060,2060,2060,2060,2060,2060,2060,2060,2060,2060,2060,2060,2026,,2026,2026
 GSw_NuclearSMR,Turn on [1] / off [0] Nuclear-SMR,1,,0,,,,,,,,,,,,,,,,,,,,,,,,0,,,,,,,,,,,,,,,,,,,,,0,,,,,0,,,,,,,,,,,,,,,,,,,,
+GSw_NuclearSMRTES,Turn on [1] / off [0] Nuclear-SMR-TES,1,,0,,,,,,,,,,,,,,,,,,,,,,,,0,,,,,,,,,,,,,,,,,,,,,0,,,,,0,,,,,,,,,,,,,,,,,,,,
 GSw_ReducedResource,Turn on/off switch to reduce the RE resource available,0,,,,,,,,,,,,,,,1,,,,,,,,,,,,,,,,,,,,,,,,1,,,,,,,,,,1,,,,,,,,,,,,,,,,1,,,,,,,
 GSw_SitingUPV,"Specify the UPV siting scenario [reference, open, limited]",reference,,,,,,,,,,,,,,,limited,,,,,,,,,,,,,,,,,,,,,,,,limited,,,,,,,,,,,,,,,,,,,,,,,,,,limited,,,,,,,
 GSw_SitingWindOfs,"Specify the offshore wind siting scenario [open, reference, limited]",reference,,,,,,,,,,,,,,,limited,,,,,,,,,,,,,,,,,,,,,,,,limited,,,,,,,,,,limited,,,,,,,,,,,,,,,,limited,,,,,,,

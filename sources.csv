@@ -128,6 +128,7 @@ RelativeFilePath,RelativeFolderPath,FileName_new,FileExtension,Description_new,I
 /inputs/capacity_exogenous/cappayments.csv,/inputs/capacity_exogenous,cappayments,.csv,,,,,,
 /inputs/capacity_exogenous/cappayments_ba.csv,/inputs/capacity_exogenous,cappayments_ba,.csv,,,,,,
 /inputs/capacity_exogenous/demonstration_plants.csv,/inputs/capacity_exogenous,demonstration_plants,.csv,Nuclear-smr demonstration plants; active when GSw_NuclearDemo=1,"t,r,i,coolingwatertech,ctt,wst,value",,See 'notes' column in the file and https://www.energy.gov/oced/advanced-reactor-demonstration-projects-0,Prescribed capacity,MW
+/inputs/capacity_exogenous/demonstration_plants.csv,/inputs/capacity_exogenous,demonstration_plants,.csv,Nuclear-smr-tes demonstration plants; active when GSw_NuclearDemo=1,"t,r,i,coolingwatertech,ctt,wst,value",,See 'notes' column in the file and https://www.energy.gov/oced/advanced-reactor-demonstration-projects-0,Prescribed capacity,MW
 /inputs/capacity_exogenous/geohydro_allkm_exog_cap_reference.csv,/inputs/capacity_exogenous,geohydro_allkm_exog_cap_reference,.csv,,,,,,
 /inputs/capacity_exogenous/geohydro_allkm_prescribed_builds_reference.csv,/inputs/capacity_exogenous,geohydro_allkm_prescribed_builds_reference,.csv,,,,,,
 /inputs/capacity_exogenous/geohydro_exog_cap_reference_ba.csv,/inputs/capacity_exogenous,geohydro_exog_cap_reference_ba,.csv,,,,,,

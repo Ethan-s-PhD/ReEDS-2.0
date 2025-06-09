@@ -320,6 +320,7 @@ plantchar_geo.csv,inputs/plant_characteristics/{plantchar_geo}.csv,GSw_Geotherma
 plantchar_h2ct.csv,inputs/plant_characteristics/{plantchar_h2ct}.csv,GSw_H2CT,~0,ignore,ignore,,,,,0,,,,,,used to define plantcharout.csv
 plantchar_hydro.csv,inputs/plant_characteristics/{plantchar_hydro}.csv,,,ignore,ignore,,,,,0,,,,,,used to define plantcharout.csv
 plantchar_nuclear_smr.csv,inputs/plant_characteristics/{plantchar_nuclear_smr}.csv,,,ignore,ignore,,,,,0,,,,,,used to define plantcharout.csv
+plantchar_nuclear_smr_tes.csv,inputs/plant_characteristics/{plantchar_nuclear_smr_tes}.csv,,,ignore,ignore,,,,,0,,,,,,used to define plantcharout.csv
 plantchar_nuclear.csv,inputs/plant_characteristics/{plantchar_nuclear}.csv,,,ignore,ignore,,,,,0,,,,,,used to define plantcharout.csv
 plantchar_ofswind.csv,inputs/plant_characteristics/{plantchar_ofswind}.csv,GSw_OfsWind,~0,ignore,ignore,,,,,0,,,,,,used to define plantcharout.csv
 plantchar_onswind.csv,inputs/plant_characteristics/{plantchar_onswind}.csv,,,ignore,ignore,,,,,0,,,,,,used to define plantcharout.csv

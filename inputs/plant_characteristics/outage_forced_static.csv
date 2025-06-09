@@ -19,6 +19,7 @@ Coal-CCS-F3,0.08
 o-g-s,0.05
 nuclear,0.03
 nuclear-SMR,0.03
+nuclear-SMR-TES,0.03
 geothermal,0.129
 biopower,0.09
 beccs_mod,0.09

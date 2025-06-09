@@ -21,6 +21,7 @@ Gas-CT,0,0,0,0
 o-g-s,0,0,0,0
 Nuclear,0,1,1,0
 Nuclear-SMR,0,1,1,0
+Nuclear-SMR-TES,0,1,1,0
 H2-CT,1,1,1,0
 H2-CC,1,1,1,0
 biopower,1,1,1,0

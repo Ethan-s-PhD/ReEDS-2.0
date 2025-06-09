@@ -566,6 +566,7 @@ nuclear-SMR_d_fg,d,fg
 nuclear-SMR_d_sg,d,sg
 nuclear-SMR_d_ss,d,ss
 nuclear-SMR_d_ww,d,ww
+
 biopower_o_fsu,o,fsu
 biopower_o_fsa,o,fsa
 biopower_o_fsl,o,fsl
