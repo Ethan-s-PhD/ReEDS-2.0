@@ -982,7 +982,7 @@ aggstack = {
         'wind-ofs':'Offshore wind',
         'wind-ons':'Land-based wind',
 
-        'nuclear':'Nuclear', 'nuclear-smr', 'nuclear-smr-tes':'Nuclear',
+        'nuclear':'Nuclear', 'nuclear-smr':'Nuclear', 'nuclear-smr-tes':'Nuclear',
     }
 }
 aggcolors = {

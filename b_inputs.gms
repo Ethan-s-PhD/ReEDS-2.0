@@ -730,7 +730,7 @@ if(Sw_NuclearSMR = 0,
   ban("Nuclear-SMR") = yes ;
 ) ;
 
-if(Sw_NuclearSMR-TES = 0,
+if(Sw_NuclearSMRTES = 0,
   ban("Nuclear-SMR-TES") = yes ;
 ) ;
 

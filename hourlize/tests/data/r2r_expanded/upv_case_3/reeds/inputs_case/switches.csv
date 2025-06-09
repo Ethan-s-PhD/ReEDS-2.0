@@ -271,6 +271,7 @@ plantchar_biopower,biopower_ATB_2024_moderate
 plantchar_other,other_plantchar
 plantchar_nuclear,nuclear_ATB_2024_moderate
 plantchar_nuclear_smr,nuclear-smr_ATB_2024_moderate
+plantchar_nuclear_smr_tes,nuclear-smr-tes_ATB_2024_moderate
 plantchar_csp,csp_ATB_2024_moderate
 dacscen,BVRE_2021_mid
 debug,0
