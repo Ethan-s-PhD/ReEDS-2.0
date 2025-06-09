@@ -86,6 +86,7 @@ sw = {
         #     'ccs_upgrade_cost_gas':'petra_atb_declines_frac',
         #     'convscen':'conv_ATB_2022_vogtle'},
         'NSMR1DAC1': {'GSw_NuclearSMR':1, 'GSw_DAC':2},
+        'NSMRTES1DAC1': {'GSw_NuclearSMRTES':1, 'GSw_DAC':2},
         'GasPriceHi': {'ngscen':'AEO_2023_LOG'},
         'GasPriceLo': {'ngscen':'AEO_2023_HOG'},
         'H2priceHi': {'rectfuelscen':40},

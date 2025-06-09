@@ -27,6 +27,7 @@ biopower,50,https://atb.nrel.gov/electricity/2022/other_technologies_(eia)
 lfill-gas,50,https://atb.nrel.gov/electricity/2022/other_technologies_(eia)
 nuclear,1117,https://atb.nrel.gov/electricity/2022/other_technologies_(eia) https://inis.iaea.org/collection/NCLCollectionStore/_Public/42/026/42026956.pdf
 nuclear-smr,600,https://atb.nrel.gov/electricity/2022/other_technologies_(eia)
+nuclear-smr-tes,600,https://atb.nrel.gov/electricity/2022/other_technologies_(eia)
 upv,100,https://atb.nrel.gov/electricity/2022/utility-scale_pv
 dupv,100,https://atb.nrel.gov/electricity/2022/utility-scale_pv
 wind-ons,200,https://atb.nrel.gov/electricity/2022/land-based_wind

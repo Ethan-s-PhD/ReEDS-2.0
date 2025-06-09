@@ -52,6 +52,7 @@ techmarkers = {
     'hydro': 's',
     'nuclear': 'p', # '☢️',
     'nuclear-smr': 'p',
+    'nuclear-smr-tes': 'p',
     'biopower': (5,1,0),
     'lfill-gas': (5,1,0),
     'beccs_mod': (5,1,180),
@@ -2814,7 +2815,7 @@ def map_capacity_techs(
         **{f'upv_{i}':'Utility PV' for i in range(20)},
         **{f'wind-ons_{i}':'Land-based wind' for i in range(20)},
         **{f'wind-ofs_{i}':'Offshore wind' for i in range(20)},
-        **dict(zip(['nuclear','nuclear-smr'], ['Nuclear']*20)),
+        **dict(zip(['nuclear','nuclear-smr','nuclear-smr-tes'], ['Nuclear']*20)),
         **dict(zip(
             ['gas-cc_re-cc','gas-ct_re-ct','re-cc','re-ct',
              'gas-cc_h2-ct','gas-ct_h2-ct','h2-cc','h2-ct'],
