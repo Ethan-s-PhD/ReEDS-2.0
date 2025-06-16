@@ -23,6 +23,7 @@ positive variables
   CAP_SDBIN(i,v,r,ccseason,sdbin,t)        "--MW-- generation power capacity by storage duration bin for relevant technologies"
   CAP_SDBIN_ENERGY(i,v,r,ccseason,sdbin,t) "--MWh-- generation energy capacity by storage duration bin for relevant technologies"
   CAP(i,v,r,t)                             "--MW-- total generation capacity in MWac (MWdc for PV); PV capacity of hybrid PV+battery; max native, flexible EV load for EVMC"
+  CAP_HEAT(i,v,r,t)                        "--MW-- total heat generation capacity in MWac for TES plants"
   CAP_ENERGY(i,v,r,t)                      "--MWh-- battery capacity in terms of energy"
   CAP_ABOVE_LIM(tg,r,t)                    "--MW-- amount of capacity that is deployed above the interconnection queue limits"
   CAP_RSC(i,v,r,rscbin,t)                  "--MW-- total generation capacity in MWac (MWdc for PV) for wind-ons and upv"
@@ -174,6 +175,7 @@ eq_interconnection_queues(tg,r,t)         "--MW-- capacity deployment limit base
  eq_spurclip(x,allh,t)                         "--MW-- generation at site x <= spurline capacity to x"
  eq_spur_noclip(x,t)                           "--MW-- spurline capacity to x must equal total generation capacity at x"
  eq_capacity_limit(i,v,r,allh,t)               "--MW-- generation limited to available capacity"
+ eq_capacity_limit_tes(i,v,r,allh,t)           "--MW-- generation from tes resources limited to available capacity"
  eq_capacity_limit_hybrid(r,allh,t)            "--MW-- generation from hybrid resources limited to available capacity"
  eq_capacity_limit_nd(i,v,r,allh,t)            "--MW-- generation limited to available capacity for non-dispatchable resources"
  eq_curt_gen_balance(r,allh,t)                 "--MW-- net generation and curtailment must equal gross generation"
@@ -298,6 +300,11 @@ eq_interconnection_queues(tg,r,t)         "--MW-- capacity deployment limit base
  eq_hybrid_plant_energy_limit(i,v,r,allh,t) "--MW-- PV energy to storage (no curtailment recovery) + PV energy to inverter <= PV resource"
  eq_plant_capacity_limit(i,v,r,allh,t)      "--MW-- energy moving through the inverter cannot exceed the inverter capacity"
  eq_pvb_itc_charge_reqt(i,v,r,t)            "--MWh-- total energy charged from local PV >= ITC qualification fraction * total energy charged"
+
+ * tes plant equations
+ eq_tes_plant_total_gen(i,v,r,allh,t)       "--MW-- generation = generation from plant + generation from storage - charging from plant"
+ eq_tes_plant_energy_limit(i,v,r,allh,t)    "--MW-- plant heat to storage + plant heat to turbine <= heat resource"
+ eq_tes_plant_capacity_limit(i,v,r,allh,t)  "--MW-- energy moving through the turbine-generator system cannot exeed steam cycle capacity"
 
 * Canadian imports balance
  eq_Canadian_Imports(r,allszn,t)          "--MWh-- Balance of Canadian imports by season"
@@ -1115,6 +1122,28 @@ eq_capacity_limit(i,v,r,h,t)
 * eq_site_cf and eq_spurclip.
 eq_capacity_limit_hybrid(r,h,t)
     $[tmodel(t)
+    $Sw_Nuclear_SMR_TES]..
+
+*total amount of dispatchable, tes capacity
+    avail(i,r,h)
+    * derate_geo_vintage(i,v)
+    * (1 + sum{szn, h_szn(h,szn) * seas_cap_frac_delta(i,v,r,szn,t)})
+    * CAP(i,v,r,t)
+
+    =g=
+
+* is >= the actual generation and operating reserves from all the hybrid resources in that BA
+    GEN(i,v,r,h,t)
+    + sum{ortype$[Sw_OpRes$opres_model(ortype)$reserve_frac(i,ortype)$opres_h(h)],
+              OPRES(ortype,i,v,r,h,t)}
+;
+
+* ---------------------------------------------------------------------------
+* For hybrid resources, the sum of generation from constituent resources is
+* limited by the available generation at that site, which is defined in
+* eq_site_cf and eq_spurclip.
+eq_capacity_limit_hybrid(r,h,t)
+    $[tmodel(t)
     $Sw_SpurScen]..
 
 * Sum of available generation across reV sites in BA
@@ -1125,6 +1154,7 @@ eq_capacity_limit_hybrid(r,h,t)
 * is >= the actual generation and operating reserves from all the hybrid resources in that BA
     sum{(i,v)
         $[spur_techs(i)
+        $(not thermal_storage(i))
         $valgen(i,v,r,t)],
         GEN(i,v,r,h,t)
         + sum{ortype$[Sw_OpRes$opres_model(ortype)$reserve_frac(i,ortype)$opres_h(h)],
@@ -3047,6 +3077,46 @@ eq_storage_interday_max_level_end(i,v,r,allszn,t)$[valgen(i,v,r,t)$storage_inter
         sum{h$[h_szn(h,szn)], (STORAGE_INTERDAY_DISPATCH(i,v,r,h,t) * hours_daily(h))}}
     
     + sum{(szn)$[szn_actualszn(szn,allszn)], STORAGE_INTERDAY_LEVEL_MAX_DAY(i,v,r,szn,t)}
+;
+
+* ---------------------------------------------------------------------------
+
+*===============================
+* --- TES Plant ---
+*===============================
+
+* ---------------------------------------------------------------------------
+
+*Generation =
+*   + generation from hybrid storage plant + generation from storage - storage charging from hybrid storage plant
+eq_plant_total_gen(i,v,r,h,t)$[storage_hybrid(i)$(not csp(i))$tmodel(t)$valgen(i,v,r,t)$Sw_Nuclear_SMR_TES]..
+
+    + GEN_PLANT(i,v,r,h,t)
+
+    + GEN_STORAGE(i,v,r,h,t)
+
+*[minus] charging from hybrid storage plant
+    - STORAGE_IN_PLANT(i,v,r,h,t)$dayhours(h)
+
+    =e=
+
+    GEN(i,v,r,h,t)
+;
+
+*Energy to storage from hybrid storage palnt + hybrid storage plant generation <= hybrid storage plant maximum production for a resource
+*capacity factor is adjusted to include inverter losses, clipping losses, and low voltage losses
+eq_hybrid_plant_energy_limit(i,v,r,h,t)$[storage_hybrid(i)$thermal_storage(i)$Sw_Nuclear_SMR_TES]..
+
+* [plus] plant output
+    m_cf(i,v,r,h,t) * CAP(i,v,r,t)
+
+    =g=
+
+*[plus] charging from hybrid plant
+    + STORAGE_IN_PLANT(i,v,r,h,t)$dayhours(h)
+
+*[plus] generation from hybrid plant
+    + GEN_PLANT(i,v,r,h,t)
 ;
 
 * ---------------------------------------------------------------------------
