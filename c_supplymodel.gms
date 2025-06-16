@@ -23,6 +23,8 @@ positive variables
   CAP_SDBIN(i,v,r,ccseason,sdbin,t)        "--MW-- generation power capacity by storage duration bin for relevant technologies"
   CAP_SDBIN_ENERGY(i,v,r,ccseason,sdbin,t) "--MWh-- generation energy capacity by storage duration bin for relevant technologies"
   CAP(i,v,r,t)                             "--MW-- total generation capacity in MWac (MWdc for PV); PV capacity of hybrid PV+battery; max native, flexible EV load for EVMC"
+  CAP_HEAT(i,v,r,t)                        "--MW-- total heat generation capacity in MW
+  CAP_TES(i,v,r,t)                             "--MW-- total thermal energy storage capacity in MW
   CAP_ENERGY(i,v,r,t)                      "--MWh-- battery capacity in terms of energy"
   CAP_ABOVE_LIM(tg,r,t)                    "--MW-- amount of capacity that is deployed above the interconnection queue limits"
   CAP_RSC(i,v,r,rscbin,t)                  "--MW-- total generation capacity in MWac (MWdc for PV) for wind-ons and upv"
@@ -40,9 +42,12 @@ positive variables
 * The units for all of the operational variables are average MW or MWh/time-slice hours
 * generation and storage variables
   GEN(i,v,r,allh,t)                      "--MW-- electricity generation (post-curtailment) in hour h"
+  GEN_HEAT(i,v,r,allh,t)                 "--MW-- heat generation in hour h"
+  GEN_TES(i,v,r,allh,t)                      "--MW-- electricity generation from TES in hour h"
   GEN_PLANT(i,v,r,allh,t)                "--MW-- average plant generation from hybrid generation/storage technologies in hour h"
   GEN_STORAGE(i,v,r,allh,t)              "--MW-- average generation from hybrid storage technologies in hour h"
   STORAGE_IN_PLANT(i,v,r,allh,t)         "--MW-- hybrid plant storage charging in hour h that is charging from a coupled technology"
+  STORAGE_IN_TES(i,v,r,allh,t)           "--MW-- TES plant storage charging in hour h that is charging from a coupled technology"
   STORAGE_IN_GRID(i,v,r,allh,t)          "--MW-- hybrid plant storage charging in hour h that is charging from the grid"
   AVAIL_SITE(x,allh,t)                   "--MW-- available generation from all resources at reV site x"
   CURT(r,allh,t)                         "--MW-- curtailment from vre generators in hour h"
@@ -174,6 +179,7 @@ eq_interconnection_queues(tg,r,t)         "--MW-- capacity deployment limit base
  eq_spurclip(x,allh,t)                         "--MW-- generation at site x <= spurline capacity to x"
  eq_spur_noclip(x,t)                           "--MW-- spurline capacity to x must equal total generation capacity at x"
  eq_capacity_limit(i,v,r,allh,t)               "--MW-- generation limited to available capacity"
+ eq_capacity_limit_tes(i,v,r,allh,t)           "--MW-- heat generation limited to available capacity"
  eq_capacity_limit_hybrid(r,allh,t)            "--MW-- generation from hybrid resources limited to available capacity"
  eq_capacity_limit_nd(i,v,r,allh,t)            "--MW-- generation limited to available capacity for non-dispatchable resources"
  eq_curt_gen_balance(r,allh,t)                 "--MW-- net generation and curtailment must equal gross generation"
@@ -1108,6 +1114,28 @@ eq_capacity_limit(i,v,r,h,t)
 *[plus] power consumed for flexible ccs
     + CCSFLEX_POW(i,v,r,h,t) $[ccsflex(i)$(Sw_CCSFLEX_BYP OR Sw_CCSFLEX_STO OR Sw_CCSFLEX_DAC)]
 ;
+
+* ---------------------------------------------------------------------------
+* For TES resources, the sum of generation 
+* GEN_HEAT(i,v,r,h,t) <= CAP_HEAT(i,v,r,t) --> Only happen if i = nuclear_tes ($thermal_storage(i))
+eq_capacity_limit_tes(i,v,r,h,t)
+    $[tmodel(t)$valgen(i,v,r,t)
+    $thermal_storage(i)]..
+    
+*total amount of tes
+    avail(i,r,h)
+    * derate_geo_vintage(i,v)
+    * (1 + sum{szn, h_szn(h,szn) * seas_cap_frac_delta(i,v,r,szn,t)})
+    * CAP_TES(i,v,r,t)
+
+    =g=
+
+*must exceed generation
+    GEN_TES(i,v,r,h,t)
+
+*[plus] sum of operating reserves by type
+    + sum{ortype$[Sw_OpRes$reserve_frac(i,ortype)$opres_h(h)$opres_model(ortype)],
+          OPRES(ortype,i,v,r,h,t) }
 
 * ---------------------------------------------------------------------------
 * For hybrid resources, the sum of generation from constituent resources is
