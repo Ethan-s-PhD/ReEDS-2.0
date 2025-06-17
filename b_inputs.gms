@@ -1026,7 +1026,7 @@ storage_hybrid(i)$(not ban(i))      = yes$i_subsets(i,'storage_hybrid') ;
 storage_interday(i)$(not ban(i))    = yes$i_subsets(i,'storage_interday') ;
 storage_standalone(i)$(not ban(i))  = yes$i_subsets(i,'storage_standalone') ;
 storage(i)$(not ban(i))             = yes$i_subsets(i,'storage') ;
-thermal_storage(i)$(not ban(i))     = yes$i_subsets(i,'thermal_storage') ;
+thermal_storage(i)     = yes$i_subsets(i,'thermal_storage') ;
 upv(i)$(not ban(i))                 = yes$i_subsets(i,'upv') ;
 vre_distributed(i)$(not ban(i))     = yes$i_subsets(i,'vre_distributed') ;
 vre_no_csp(i)$(not ban(i))          = yes$i_subsets(i,'vre_no_csp') ;
@@ -4253,7 +4253,7 @@ $onlisting
 * Assign a battery capacity ratio to each hybrid PV+battery technology
 parameter bcr(i) "--unitless-- ratio of the battery capacity to the PV DC capacity (battery capacity ratio)" ;
 bcr(pvb) = sum{pvb_config$pvb_agg(pvb_config,pvb), bir_pvb_config(pvb_config) / ilr_pvb_config(pvb_config) } ;
-bcr(i)$[storage_standalone(i) or csp_storage(i) or hyd_add_pump(i)] = 1 ;
+bcr(i)$[storage_standalone(i) or csp_storage(i) or hyd_add_pump(i) or thermal_storage(i)] = 1 ;
 
 *=========================================
 * --- Capital costs ---
@@ -5590,6 +5590,8 @@ storage_eff(i,t)$pvb(i) = storage_eff("battery_%GSw_pvb_dur%",t) ;
 
 parameter storage_eff_pvb_p(i,t) "--fraction-- efficiency of hybrid PV+battery when charging from the coupled PV"
           storage_eff_pvb_g(i,t) "--fraction-- efficiency of hybrid PV+battery when charging from the grid" ;
+
+parameter storage_eff_tes(i,t) "--fraction-- efficiency of tes when charging from the coupled heat plant" ;
 
 *when charging from PV the pvb system will have a higher efficiency due to one less inverter conversion
 storage_eff_pvb_p(i,t)$pvb(i) = storage_eff(i,t) / inverter_efficiency ;
