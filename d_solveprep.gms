@@ -96,6 +96,7 @@ rggi_cap(t)$rggi_cap(t) = round(rggi_cap(t),0) ;
 state_cap(st,t)$state_cap(st,t) = round(state_cap(st,t),0) ;
 storage_eff_pvb_g(i,t)$storage_eff_pvb_g(i,t) = round(storage_eff_pvb_g(i,t),3) ;
 storage_eff_pvb_p(i,t)$storage_eff_pvb_p(i,t) = round(storage_eff_pvb_p(i,t),3) ;
+storage_eff_tes(i,t)$storage_eff_tes(i,t) = round(storage_eff_tes(i,t),3) ;
 tranloss(r,rr,trtype)$tranloss(r,rr,trtype) = round(tranloss(r,rr,trtype),3) ;
 transmission_line_capcost(r,rr,trtype)$transmission_line_capcost(r,rr,trtype) = round(transmission_line_capcost(r,rr,trtype),2) ;
 transmission_line_fom(r,rr,trtype)$transmission_line_fom(r,rr,trtype) = round(transmission_line_fom(r,rr,trtype),3) ;

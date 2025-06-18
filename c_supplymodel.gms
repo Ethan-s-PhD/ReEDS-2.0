@@ -24,7 +24,7 @@ positive variables
   CAP_SDBIN_ENERGY(i,v,r,ccseason,sdbin,t) "--MWh-- generation energy capacity by storage duration bin for relevant technologies"
   CAP(i,v,r,t)                             "--MW-- total generation capacity in MWac (MWdc for PV); PV capacity of hybrid PV+battery; max native, flexible EV load for EVMC"
   CAP_HEAT(i,v,r,t)                        "--MW-- total heat generation capacity in MW"
-  CAP_TES(i,v,r,t)                             "--MW-- total thermal energy storage capacity in MW"
+  CAP_TES(i,v,r,t)                             "--MWh-- total thermal energy storage capacity in MW"
   CAP_ENERGY(i,v,r,t)                      "--MWh-- battery capacity in terms of energy"
   CAP_ABOVE_LIM(tg,r,t)                    "--MW-- amount of capacity that is deployed above the interconnection queue limits"
   CAP_RSC(i,v,r,rscbin,t)                  "--MW-- total generation capacity in MWac (MWdc for PV) for wind-ons and upv"
@@ -46,8 +46,8 @@ positive variables
   GEN_TES(i,v,r,allh,t)                      "--MW-- electricity generation from TES in hour h"
   GEN_PLANT(i,v,r,allh,t)                "--MW-- average plant generation from hybrid generation/storage technologies in hour h"
   GEN_STORAGE(i,v,r,allh,t)              "--MW-- average generation from hybrid storage technologies in hour h"
-  STORAGE_IN_PLANT(i,v,r,allh,t)         "--MW-- hybrid plant storage charging in hour h that is charging from a coupled technology"
   STORAGE_IN_TES(i,v,r,allh,t)           "--MW-- TES plant storage charging in hour h that is charging from a coupled technology"
+  STORAGE_IN_PLANT(i,v,r,allh,t)         "--MW-- hybrid plant storage charging in hour h that is charging from a coupled technology"
   STORAGE_IN_GRID(i,v,r,allh,t)          "--MW-- hybrid plant storage charging in hour h that is charging from the grid"
   AVAIL_SITE(x,allh,t)                   "--MW-- available generation from all resources at reV site x"
   CURT(r,allh,t)                         "--MW-- curtailment from vre generators in hour h"
@@ -295,7 +295,6 @@ eq_interconnection_queues(tg,r,t)         "--MW-- capacity deployment limit base
  eq_storage_interday_max_level_start(i,v,r,allszn,t)      "--MWh-- enforce maximum SOC at first period of each partition"
  eq_storage_interday_max_level_end(i,v,r,allszn,t)        "--MWh-- enforce maximum SOC at last period of each partition"
  eq_storage_opres(i,v,r,allh,t)                   "--MWh-- there must be sufficient energy in the storage to be able to provide operating reserves"
- eq_storage_thermalres(i,v,r,allh,t)              "--MW-- thermal storage contribution to operating reserves is store_in only"
  eq_battery_minduration(i,v,r,t)                  "--MWh-- when power capacity is built, energy capacity should have a minimum capacity"
 
 * hybrid plant equations
@@ -305,7 +304,7 @@ eq_interconnection_queues(tg,r,t)         "--MW-- capacity deployment limit base
  eq_pvb_itc_charge_reqt(i,v,r,t)            "--MWh-- total energy charged from local PV >= ITC qualification fraction * total energy charged"
 
 * tes plant equations
- eq_tes_lant_total_gen(i,v,r,allh,t)           "--MW-- generation = generation from plant + generation from storage - storage charging"
+ eq_tes_plant_total_gen(i,v,r,allh,t)           "--MW-- generation = generation from plant + generation from storage - storage charging"
  eq_tes_plant_energy_limit(i,v,r,allh,t)   "--MW--heat to storage + plant energy to turbine <= cap heat"
  eq_tes_plant_capacity_limit(i,v,r,allh,t)      "--MW-- energy moving through the turbine cannot exceed turbine capacity"
 
@@ -2767,7 +2766,7 @@ eq_storage_capacity(i,v,r,h,t)
     + STORAGE_IN_GRID(i,v,r,h,t)$[storage_hybrid(i)$(not csp(i))$Sw_HybridPlant]
 
 * steam+tes plant: plant generation
-    + STORAGE_IN_TES(i,v,r,h,t)$[thermal_storage(i)$(not csp(i))$dayhours(h)$Sw_NuclearSMRTES]
+    + STORAGE_IN_TES(i,v,r,h,t)$[thermal_storage(i)$(not csp(i))$Sw_NuclearSMRTES]
 
 * [plus] Operating reserves
     + sum{ortype$[Sw_OpRes$opres_model(ortype)$opres_h(h)],
@@ -2800,7 +2799,7 @@ eq_storage_level(i,v,r,h,t)$[valgen(i,v,r,t)$storage(i)$tmodel(t)]..
 *[plus] storage charging
     + storage_eff(i,t) *  hours_daily(h) * (
 *energy into stand-alone storage (not CSP-TES) and hydropower that adds pumping
-          STORAGE_IN(i,v,r,h,t)$[storage_standalone(i) or hyd_add_pump(i)]$(not thermal_storage(i))
+          STORAGE_IN(i,v,r,h,t)$[storage_standalone(i) or hyd_add_pump(i)]
 
 *energy into storage from CSP field
         + (CAP(i,v,r,t) * csp_sm(i) * m_cf(i,v,r,h,t)
@@ -2830,7 +2829,7 @@ eq_storage_level(i,v,r,h,t)$[valgen(i,v,r,t)$storage(i)$tmodel(t)]..
     - hours_daily(h) * GEN(i,v,r,h,t)$[not storage_hybrid(i)$(not csp(i))$(not thermal_storage(i))]
 
 *[minus] Generation from Battery (discharge) of hybrid+storage plant
-    - hours_daily(h) * GEN_STORAGE(i,v,r,h,t) $[storage_hybrid(i)$(not csp(i))$Sw_HybridPlant]
+    - hours_daily(h) * GEN_STORAGE(i,v,r,h,t) $[storage_hybrid(i)$(not csp(i))$(not thermal_storage(i))$Sw_HybridPlant]
 
 *[minus] generation from tes (discharge)
 *exclude hybrid+storage plant because GEN refers to output from both the plant and the battery
@@ -2849,7 +2848,7 @@ eq_storage_level(i,v,r,h,t)$[valgen(i,v,r,t)$storage(i)$tmodel(t)]..
 *there must be sufficient energy in storage to provide operating reserves
 eq_storage_opres(i,v,r,h,t)
     $[valgen(i,v,r,t)$tmodel(t)$Sw_OpRes$opres_h(h)
-    $(storage_standalone(i) or storage_hybrid(i)$(not csp(i)) or hyd_add_pump(i))]..
+    $(storage_standalone(i) or storage_hybrid(i) or thermal_storage(i)$(not csp(i)) or hyd_add_pump(i))]..
 
 *[plus] initial storage level
     STORAGE_LEVEL(i,v,r,h,t)
@@ -2882,13 +2881,16 @@ eq_storage_duration(i,v,r,h,t)$[valgen(i,v,r,t)$valcap(i,v,r,t)
                                $tmodel(t)]..
 
 * [plus] storage duration times storage capacity
-    storage_duration(i) * CAP(i,v,r,t) * (1$thermal_storage(i) + 1$CSP_Storage(i) + 1$psh(i) + bcr(i)$(battery(i)$(not continuous_battery(i)) or pvb(i)))
+    storage_duration(i) * CAP(i,v,r,t) * (1$CSP_Storage(i) + 1$psh(i) + bcr(i)$(battery(i)$(not continuous_battery(i)) or pvb(i)))
+
+* [plus] continuous battery storage capacity
+    + CAP_ENERGY(i,v,r,t)$continuous_battery(i)
 
 * [plus] EVMC storage has time-varying energy capacity
     + evmc_storage_energy_hours(i,r,h,t) * CAP(i,v,r,t) * (bcr(i)$evmc_storage(i))
 
-* [plus] continuous battery storage capacity
-    + CAP_ENERGY(i,v,r,t)$continuous_battery(i)
+* [plus] thermal plant with tes storage capacity
+    + CAP_TES(i,v,r,t)$thermal_storage(i)
 
     =g=
 
@@ -3166,7 +3168,7 @@ eq_tes_plant_total_gen(i,v,r,h,t)$[thermal_storage(i)$tmodel(t)$valgen(i,v,r,t)$
     + GEN_TES(i,v,r,h,t)
 
 *[minus] charging from hybrid storage plant
-    - STORAGE_IN_TES(i,v,r,h,t)$dayhours(h)
+    - STORAGE_IN_TES(i,v,r,h,t)
 
     =e=
 
@@ -3183,9 +3185,6 @@ eq_tes_plant_energy_limit(i,v,r,h,t)$[thermal_storage(i)$tmodel(t)$valgen(i,v,r,
 
     =g=
 
-*[plus] charging from hybrid plant
-    + STORAGE_IN_TES(i,v,r,h,t)$dayhours(h)
-
 *[plus] generation from hybrid plant
     + GEN_HEAT(i,v,r,h,t)
 ;
@@ -3196,7 +3195,7 @@ eq_tes_plant_energy_limit(i,v,r,h,t)$[thermal_storage(i)$tmodel(t)$valgen(i,v,r,
 eq_tes_plant_capacity_limit(i,v,r,h,t)$[thermal_storage(i)$tmodel(t)$valgen(i,v,r,t)$valcap(i,v,r,t)$Sw_NuclearSMRTES]..
 
 *[plus] inverter capacity [AC] = panel capacity [DC] / ILR [DC/AC]
-    + CAP(i,v,r,t) / ilr(i)
+    CAP(i,v,r,t)
 
     =g=
 

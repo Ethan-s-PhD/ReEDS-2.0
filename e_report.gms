@@ -665,9 +665,18 @@ stor_inout(i,v,r,t,"in")$[valgen(i,v,r,t)$storage(i)$[not storage_hybrid(i)$(not
 stor_inout(i,v,r,t,"out")$[valgen(i,v,r,t)$storage(i)] = gen_ivrt(i,v,r,t) ;
 stor_in(i,v,r,h,t)$[storage(i)$valgen(i,v,r,t)$(not storage_hybrid(i)$(not csp(i)))] = STORAGE_IN.l(i,v,r,h,t) ;
 stor_out(i,v,r,h,t)$[storage(i)$valgen(i,v,r,t)] = GEN.l(i,v,r,h,t) ;
-stor_level(i,v,r,h,t)$[valgen(i,v,r,t)$storage(i)] = STORAGE_LEVEL.l(i,v,r,h,t) ;
+stor_level(i,v,r,h,t)$[storage(i)$valgen(i,v,r,t)] = STORAGE_LEVEL.l(i,v,r,h,t) ;
 stor_interday_level(i,v,r,allszn,t)$[valgen(i,v,r,t)$storage_interday(i)] = STORAGE_INTERDAY_LEVEL.l(i,v,r,allszn,t) ;
 stor_interday_dispatch(i,v,r,h,t)$[valgen(i,v,r,t)$storage_interday(i)] = STORAGE_INTERDAY_DISPATCH.l(i,v,r,h,t) ;
+
+* tes outputs
+smrtes_cap_heat(i,v,r,t)$[thermal_storage(i)$valgen(i,v,r,t)] = CAP_HEAT.l(i,v,r,t) ;
+smrtes_cap_tes(i,v,r,t)$[thermal_storage(i)$valgen(i,v,r,t)] = CAP_TES.l(i,v,r,t) ;
+smrtes_gen_heat(i,v,r,h,t)$[thermal_storage(i)$valgen(i,v,r,t)] = GEN_HEAT.l(i,v,r,h,t) ;
+smrtes_gen_tes(i,v,r,h,t)$[thermal_storage(i)$valgen(i,v,r,t)] = GEN_TES.l(i,v,r,h,t) ;
+smrtes_tot_gen(i,v,r,h,t)$[thermal_storage(i)$valgen(i,v,r,t)] = GEN.l(i,v,r,h,t) ;
+smrtes_stor_in_tes(i,v,r,h,t)$[thermal_storage(i)$valgen(i,v,r,t)] = STORAGE_IN_TES.l(i,v,r,h,t) ;
+smrtes_stor_level_tes(i,v,r,h,t)$[thermal_storage(i)$valgen(i,v,r,t)] = STORAGE_LEVEL.l(i,v,r,h,t) ;
 
 *=====================================================================
 * WATER ACCOUNTING, CAPACITY, NEW CAPACITY, AND RETIRED CAPACITY
@@ -914,6 +923,10 @@ cap_energy_ivrt(i,v,r,t)$[valcap(i,v,r,t)$psh(i)] = CAP.l(i,v,r,t) * storage_dur
 * continuous battery storage duration
 storage_duration_out(i,v,r,t)$[valcap(i,v,r,t)$continuous_battery(i)$CAP.l(i,v,r,t)] = 
         CAP_ENERGY.l(i,v,r,t) / CAP.l(i,v,r,t) ;
+
+* continuous battery storage duration
+stor_energy_cap(i,v,r,t)$[tmodel_new(t)$valcap(i,v,r,t)$thermal_storage(i)] = 
+        CAP_TES.l(i,v,r,t) / CAP.l(i,v,r,t) ;
 
 *==================================
 * CAPACITY CREDIT AND FIRM CAPACITY

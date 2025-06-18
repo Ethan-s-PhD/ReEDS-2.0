@@ -7,6 +7,8 @@
 
 * capacity and investment variables
     CAP.fx(i,v,r,tfix)$[valcap(i,v,r,tfix)] = CAP.l(i,v,r,tfix) ;
+    CAP_HEAT.fx(i,v,r,tfix)$[thermal_storage(i)$(not csp(i))$valcap(i,v,r,tfix)$Sw_NuclearSMRTES] = CAP_HEAT.l(i,v,r,tfix) ;
+    CAP_TES.fx(i,v,r,tfix)$[thermal_storage(i)$(not csp(i))$valcap(i,v,r,tfix)$Sw_NuclearSMRTES] = CAP_TES.l(i,v,r,tfix) ;
     CAP_ENERGY.fx(i,v,r,tfix)$[valcap(i,v,r,tfix)$continuous_battery(i)] = CAP_ENERGY.l(i,v,r,tfix) ;
     CAP_ABOVE_LIM.fx(tg,r,tfix)$[(yeart(tfix)>=model_builds_start_yr)
                                  $(sum{(tgg,rr), cap_limit(tgg,rr,tfix)})
@@ -27,11 +29,14 @@
 
 * generation and storage variables
     GEN.fx(i,v,r,h,tfix)$valgen(i,v,r,tfix) = GEN.l(i,v,r,h,tfix) ;
+    GEN_HEAT.fx(i,v,r,h,tfix)$[thermal_storage(i)$(not csp(i))$valgen(i,v,r,tfix)$Sw_NuclearSMRTES] = GEN_HEAT.l(i,v,r,h,tfix) ;
+    GEN_TES.fx(i,v,r,h,tfix)$[thermal_storage(i)$(not csp(i))$valgen(i,v,r,tfix)$Sw_NuclearSMRTES] = GEN_TES.l(i,v,r,h,tfix) ;
     GEN_PLANT.fx(i,v,r,h,tfix)$[storage_hybrid(i)$(not csp(i))$valgen(i,v,r,tfix)$Sw_HybridPlant] = GEN_PLANT.l(i,v,r,h,tfix) ;
     GEN_STORAGE.fx(i,v,r,h,tfix)$[storage_hybrid(i)$(not csp(i))$valgen(i,v,r,tfix)$Sw_HybridPlant] = GEN_STORAGE.l(i,v,r,h,tfix) ;
     CURT.fx(r,h,tfix)$Sw_CurtMarket = CURT.l(r,h,tfix) ;
     MINGEN.fx(r,szn,tfix)$Sw_Mingen = MINGEN.l(r,szn,tfix) ;
     STORAGE_IN.fx(i,v,r,h,tfix)$[valgen(i,v,r,tfix)$(storage_standalone(i) or hyd_add_pump(i))] = STORAGE_IN.l(i,v,r,h,tfix) ;
+    STORAGE_IN_TES.fx(i,v,r,h,tfix)$[valgen(i,v,r,tfix)$thermal_storage(i)$(not csp(i))$Sw_NuclearSMRTES] = STORAGE_IN_TES.l(i,v,r,h,tfix) ;
     STORAGE_IN_PLANT.fx(i,v,r,h,tfix)$[valgen(i,v,r,tfix)$storage_hybrid(i)$(not csp(i))$Sw_HybridPlant] = STORAGE_IN_PLANT.l(i,v,r,h,tfix) ;
     STORAGE_IN_GRID.fx(i,v,r,h,tfix)$[valgen(i,v,r,tfix)$storage_hybrid(i)$(not csp(i))$Sw_HybridPlant] = STORAGE_IN_GRID.l(i,v,r,h,tfix) ;
     STORAGE_LEVEL.fx(i,v,r,h,tfix)$[valgen(i,v,r,tfix)$storage(i)$(not storage_interday(i))] = STORAGE_LEVEL.l(i,v,r,h,tfix) ;
