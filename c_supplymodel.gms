@@ -2748,7 +2748,7 @@ eq_storage_capacity(i,v,r,h,t)
     =g=
 
 * [plus] Generation from storage, excluding hybrid+storage and adjusting evmc_storage for time-varying discharge (deferral) availability
-    GEN(i,v,r,h,t)$(not storage_hybrid(i)$(not csp(i))) / (1$(not evmc_storage(i)) + evmc_storage_discharge_frac(i,r,h,t)$evmc_storage(i))
+    GEN(i,v,r,h,t)$(not storage_hybrid(i)$(not csp(i))$(not thermal_storage(i))) / (1$(not evmc_storage(i)) + evmc_storage_discharge_frac(i,r,h,t)$evmc_storage(i))
 
 * [plus] Generation from battery of hybrid+storage
     + GEN_STORAGE(i,v,r,h,t)$[storage_hybrid(i)$(not csp(i))$Sw_HybridPlant]
@@ -2758,7 +2758,7 @@ eq_storage_capacity(i,v,r,h,t)
 
 * [plus] Storage charging
 * excludes hybrid plant+storage and adjusting evmc_storage for time-varying charge (add back deferred EV load) availability
-    + STORAGE_IN(i,v,r,h,t)$[not storage_hybrid(i)$(not csp(i))] / (1$(not evmc_storage(i)) + evmc_storage_charge_frac(i,r,h,t)$evmc_storage(i))
+    + STORAGE_IN(i,v,r,h,t)$[not storage_hybrid(i)$(not csp(i))$(not thermal_storage(i))] / (1$(not evmc_storage(i)) + evmc_storage_charge_frac(i,r,h,t)$evmc_storage(i))
    
 * hybrid+storage plant: plant generation
     + STORAGE_IN_PLANT(i,v,r,h,t)$[storage_hybrid(i)$(not csp(i))$dayhours(h)$Sw_HybridPlant]
@@ -2854,10 +2854,13 @@ eq_storage_opres(i,v,r,h,t)
     STORAGE_LEVEL(i,v,r,h,t)
 
 *[minus] generation that occurs during this timeslice
-    - hours_daily(h) * GEN(i,v,r,h,t) $[not storage_hybrid(i)$(not csp(i))]
+    - hours_daily(h) * GEN(i,v,r,h,t) $[not storage_hybrid(i)$(not csp(i))$(not thermal_storage(i))]
 
 *[minus] generation that occurs during this timeslice
     - hours_daily(h) * GEN_STORAGE(i,v,r,h,t) $[storage_hybrid(i)$(not csp(i))$Sw_HybridPlant]
+
+*[minus] generation that occurs during this timeslice
+    - hours_daily(h) * GEN_TES(i,v,r,h,t) $[thermal_storage(i)$(not csp(i))$Sw_NuclearSMRTES]
 
 *[minus] losses from reg reserves (only half because only charging half
 *the time while providing reg reserves)
@@ -3159,7 +3162,7 @@ eq_pvb_itc_charge_reqt(i,v,r,t)$[pvb(i)$tmodel(t)$valgen(i,v,r,t)$pvb_itc_qual_f
 
 * ---------------------------------------------------------------------------
 
-*Heat generation =
+*Net generation =
 *   + generation from plant + generation from storage - storage charging
 eq_tes_plant_total_gen(i,v,r,h,t)$[thermal_storage(i)$tmodel(t)$valgen(i,v,r,t)$Sw_NuclearSMRTES]..
 
@@ -3177,7 +3180,7 @@ eq_tes_plant_total_gen(i,v,r,h,t)$[thermal_storage(i)$tmodel(t)$valgen(i,v,r,t)$
 
 * ---------------------------------------------------------------------------
 
-*Heat to storage from tes plant + tes heat plant generation <= tes heat plant maximum production
+*TES heat plant generation < tes heat plant maximum production
 eq_tes_plant_energy_limit(i,v,r,h,t)$[thermal_storage(i)$tmodel(t)$valgen(i,v,r,t)$valcap(i,v,r,t)$Sw_NuclearSMRTES]..
 
 * [plus] plant output
@@ -3200,10 +3203,7 @@ eq_tes_plant_capacity_limit(i,v,r,h,t)$[thermal_storage(i)$tmodel(t)$valgen(i,v,
     =g=
 
 * [plus] Output from plant
-    + GEN_HEAT(i,v,r,h,t)
-
-* [plus] Output form storage
-    + GEN_TES(i,v,r,h,t)
+    + GEN(i,v,r,h,t)
 
 *[plus] battery operating reserves
     + sum{ortype$[Sw_OpRes$opres_h(h)$opres_model(ortype)], OPRES(ortype,i,v,r,h,t) }
