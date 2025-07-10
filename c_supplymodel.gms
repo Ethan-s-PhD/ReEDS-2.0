@@ -2787,8 +2787,8 @@ eq_storage_level(i,v,r,h,t)$[valgen(i,v,r,t)$storage(i)$tmodel(t)]..
 *[plus] storage level in h+1
     sum{(hh)$[nexth(h,hh)], STORAGE_LEVEL(i,v,r,hh,t)}$(not storage_interday(i))
 
-*[plus] the net dispatch of inter-day storage technologies
-    + STORAGE_INTERDAY_DISPATCH(i,v,r,h,t)$(storage_interday(i)) * hours_daily(h)
+* *[plus] the net dispatch of inter-day storage technologies
+*     + STORAGE_INTERDAY_DISPATCH(i,v,r,h,t)$(storage_interday(i)) * hours_daily(h)
 
     =e=
 
@@ -2796,51 +2796,51 @@ eq_storage_level(i,v,r,h,t)$[valgen(i,v,r,t)$storage(i)$tmodel(t)]..
 * otherwise it becomes a free variable, implying you can charge storage without bound
     STORAGE_LEVEL(i,v,r,h,t)$(not storage_interday(i))
 
-*[plus] storage charging
-    + storage_eff(i,t) *  hours_daily(h) * (
-*energy into stand-alone storage (not CSP-TES) and hydropower that adds pumping
-          STORAGE_IN(i,v,r,h,t)$[storage_standalone(i) or hyd_add_pump(i)]
+* *[plus] storage charging
+*     + storage_eff(i,t) *  hours_daily(h) * (
+* *energy into stand-alone storage (not CSP-TES) and hydropower that adds pumping
+*           STORAGE_IN(i,v,r,h,t)$[storage_standalone(i) or hyd_add_pump(i)]
 
-*energy into storage from CSP field
-        + (CAP(i,v,r,t) * csp_sm(i) * m_cf(i,v,r,h,t)
-          )$[CSP_Storage(i)$valcap(i,v,r,t)]
-      )
-*[plus] water inflow energy available for hydropower that adds pumping
-    + (CAP(i,v,r,t) * avail(i,r,h) * hours_daily(h) *
-        sum{szn$h_szn(h,szn), m_cf_szn(i,v,r,szn,t) }
-        )$hyd_add_pump(i)
+* *energy into storage from CSP field
+*         + (CAP(i,v,r,t) * csp_sm(i) * m_cf(i,v,r,h,t)
+*           )$[CSP_Storage(i)$valcap(i,v,r,t)]
+*       )
+* *[plus] water inflow energy available for hydropower that adds pumping
+*     + (CAP(i,v,r,t) * avail(i,r,h) * hours_daily(h) *
+*         sum{szn$h_szn(h,szn), m_cf_szn(i,v,r,szn,t) }
+*         )$hyd_add_pump(i)
 
-*[plus] energy into hybrid plant storage
-*hybrid+storage plant: plant charging
-    + storage_eff_pvb_p(i,t) * hours_daily(h)
-      * STORAGE_IN_PLANT(i,v,r,h,t)$[storage_hybrid(i)$(not csp(i))$dayhours(h)$Sw_HybridPlant]
+* *[plus] energy into hybrid plant storage
+* *hybrid+storage plant: plant charging
+*     + storage_eff_pvb_p(i,t) * hours_daily(h)
+*       * STORAGE_IN_PLANT(i,v,r,h,t)$[storage_hybrid(i)$(not csp(i))$dayhours(h)$Sw_HybridPlant]
 
-*hybrid+storage plant: grid charging
-    + storage_eff_pvb_g(i,t) * hours_daily(h) 
-      * STORAGE_IN_GRID(i,v,r,h,t)$[storage_hybrid(i)$(not csp(i))$Sw_HybridPlant]
+* *hybrid+storage plant: grid charging
+*     + storage_eff_pvb_g(i,t) * hours_daily(h) 
+*       * STORAGE_IN_GRID(i,v,r,h,t)$[storage_hybrid(i)$(not csp(i))$Sw_HybridPlant]
 
 *[plus] energy into thermal plant tes
     + storage_eff_tes(i,t) *  hours_daily(h)
 *energy into thermal plant tes (not CSP-TES)
       * STORAGE_IN_TES(i,v,r,h,t)$thermal_storage(i)
 
-*[minus] generation from stand-alone storage (discharge) and CSP
-*exclude hybrid+storage plant and tes plant because GEN refers to output from both the plant and the battery
-    - hours_daily(h) * GEN(i,v,r,h,t)$[not storage_hybrid(i)$(not csp(i))$(not thermal_storage(i))]
+* *[minus] generation from stand-alone storage (discharge) and CSP
+* *exclude hybrid+storage plant and tes plant because GEN refers to output from both the plant and the battery
+*     - hours_daily(h) * GEN(i,v,r,h,t)$[not storage_hybrid(i)$(not csp(i))$(not thermal_storage(i))]
 
-*[minus] Generation from Battery (discharge) of hybrid+storage plant
-    - hours_daily(h) * GEN_STORAGE(i,v,r,h,t) $[storage_hybrid(i)$(not csp(i))$(not thermal_storage(i))$Sw_HybridPlant]
+* *[minus] Generation from Battery (discharge) of hybrid+storage plant
+*     - hours_daily(h) * GEN_STORAGE(i,v,r,h,t) $[storage_hybrid(i)$(not csp(i))$(not thermal_storage(i))$Sw_HybridPlant]
 
 *[minus] generation from tes (discharge)
 *exclude hybrid+storage plant because GEN refers to output from both the plant and the battery
     - hours_daily(h) * GEN_TES(i,v,r,h,t)$thermal_storage(i)
 
-*[minus] losses from reg reserves (only half because only charging half
-*the time while providing reg reserves)
-    - (hours_daily(h)
-       * (OPRES("reg",i,v,r,h,t)$[Sw_OpRes=1] + OPRES("combo",i,v,r,h,t)$[Sw_OpRes=2])
-       * (1 - storage_eff(i,t)) / 2 * reg_energy_frac
-    )$[opres_h(h)]
+* *[minus] losses from reg reserves (only half because only charging half
+* *the time while providing reg reserves)
+*     - (hours_daily(h)
+*        * (OPRES("reg",i,v,r,h,t)$[Sw_OpRes=1] + OPRES("combo",i,v,r,h,t)$[Sw_OpRes=2])
+*        * (1 - storage_eff(i,t)) / 2 * reg_energy_frac
+*     )$[opres_h(h)]
 ;
 
 * ---------------------------------------------------------------------------
@@ -3166,7 +3166,7 @@ eq_pvb_itc_charge_reqt(i,v,r,t)$[pvb(i)$tmodel(t)$valgen(i,v,r,t)$pvb_itc_qual_f
 *   + generation from plant + generation from storage - storage charging
 eq_tes_plant_total_gen(i,v,r,h,t)$[thermal_storage(i)$tmodel(t)$valgen(i,v,r,t)$Sw_NuclearSMRTES]..
 
-    + GEN_HEAT(i,v,r,h,t)
+    GEN_HEAT(i,v,r,h,t)
 
     + GEN_TES(i,v,r,h,t)
 
@@ -3197,7 +3197,7 @@ eq_tes_plant_energy_limit(i,v,r,h,t)$[thermal_storage(i)$tmodel(t)$valgen(i,v,r,
 *Energy moving through the tubine cannot exceed the turbine capacity
 eq_tes_plant_capacity_limit(i,v,r,h,t)$[thermal_storage(i)$tmodel(t)$valgen(i,v,r,t)$valcap(i,v,r,t)$Sw_NuclearSMRTES]..
 
-*[plus] inverter capacity [AC] = panel capacity [DC] / ILR [DC/AC]
+* [plus] turbine capacity
     CAP(i,v,r,t)
 
     =g=
