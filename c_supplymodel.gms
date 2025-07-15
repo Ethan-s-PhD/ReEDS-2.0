@@ -2826,7 +2826,7 @@ eq_storage_level(i,v,r,h,t)$[valgen(i,v,r,t)$storage(i)$tmodel(t)]..
 
 *[minus] generation from stand-alone storage (discharge) and CSP
 *exclude hybrid+storage plant and tes plant because GEN refers to output from both the plant and the battery
-    - hours_daily(h) * GEN(i,v,r,h,t)$[storage_standalone(i)$(not storage_hybrid(i))$(not csp(i))$(not thermal_storage(i))]
+    - hours_daily(h) * GEN(i,v,r,h,t)$[(not storage_hybrid(i))$(not csp(i))$(not thermal_storage(i))]
 
 *[minus] Generation from Battery (discharge) of hybrid+storage plant
     - hours_daily(h) * GEN_STORAGE(i,v,r,h,t) $[storage_hybrid(i)$(not csp(i))$(not thermal_storage(i))$Sw_HybridPlant]
