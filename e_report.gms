@@ -924,9 +924,9 @@ cap_energy_ivrt(i,v,r,t)$[valcap(i,v,r,t)$psh(i)] = CAP.l(i,v,r,t) * storage_dur
 storage_duration_out(i,v,r,t)$[valcap(i,v,r,t)$continuous_battery(i)$CAP.l(i,v,r,t)] = 
         CAP_ENERGY.l(i,v,r,t) / CAP.l(i,v,r,t) ;
 
-* continuous battery storage duration
-stor_energy_cap(i,v,r,t)$[tmodel_new(t)$valcap(i,v,r,t)$thermal_storage(i)] = 
-        CAP_TES.l(i,v,r,t) / CAP.l(i,v,r,t) ;
+* tes capacity of storage
+stor_energy_cap(i,v,r,t)$[tmodel_new(t)$valcap(i,v,r,t)$thermal_storage(i)$CAP.l(i,v,r,t)] = 
+        CAP_TES.l(i,v,r,t) ;
 
 *==================================
 * CAPACITY CREDIT AND FIRM CAPACITY

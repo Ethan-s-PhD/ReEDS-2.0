@@ -155,6 +155,7 @@ EQUATION
  eq_cap_upgrade(i,v,r,t)                  "--MW-- All purchased upgrades are greater than or equal to the sum of upgraded capacity"
  eq_ener_up(i,v,r,rscbin,t)               "--MW-- limit on energy upsizing"
  eq_forceprescription(pcat,r,t)           "--MW-- total investment in prescribed capacity must equal amount from exogenous prescriptions"
+ eq_tes_build_requirement(i,v,r,t)         "--MW-- total annual investment in TES must equal set amount"
  eq_refurblim(i,r,t)                      "--MW-- total refurbishments cannot exceed the amount of capacity that has reached the end of its life"
 
 * renewable supply curves
@@ -859,6 +860,23 @@ eq_forceprescription(pcat,r,t)
                                $sum{st$r_st(r,st), offshore_cap_req(st,t) }]
 ;
 
+* ---------------------------------------------------------------------------
+
+* require specific amounts of TES investment each year
+eq_tes_build_requirement(i,v,r,t)
+    $[tmodel(t)$thermal_storage(i)
+    $(yeart(t) >= model_builds_start_yr)
+    $Sw_NuclearSMRTES]..
+
+* investments 
+    INV(i,v,r,t)$[valinv(i,v,r,t)$thermal_storage(i)]
+
+    =e=
+
+* must equal the required amount
+    tes_requirement(i,t)$thermal_storage(i)
+  
+;
 
 * ---------------------------------------------------------------------------
 
