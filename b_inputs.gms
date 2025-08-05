@@ -2952,9 +2952,9 @@ Parameter RecPerc(RPSCat,st,t)     "--fraction-- fraction of total generation fo
           RPSTechMult(RPSCat,i,st) "--fraction-- fraction of generation from each technology that counts towards the requirement for each category"
 ;
 
-parameter tes_requirement(i,t) "--float-- requiredd investment in thermal storage for each technology and year" ;
+parameter tes_requirement(i,t) "--float-- required investment in thermal storage for each technology and year" ;
 
-tes_requirement(i,t)$thermal_storage(i) = 0 ;
+tes_requirement(i,t)$thermal_storage(i) =  0;
 
 * Create a new r-to-state mapping set that allows voluntary purchases
 r_st_rps(r,st) = r_st(r,st) ;

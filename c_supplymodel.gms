@@ -866,10 +866,11 @@ eq_forceprescription(pcat,r,t)
 eq_tes_build_requirement(i,v,r,t)
     $[tmodel(t)$thermal_storage(i)
     $(yeart(t) >= model_builds_start_yr)
-    $Sw_NuclearSMRTES]..
+    $Sw_NuclearSMRTES
+    $Sw_TES_Investment]..
 
 * investments 
-    INV(i,v,r,t)$[valinv(i,v,r,t)$thermal_storage(i)]
+    INV(i,v,r,t)$[valinv(i,v,r,t)$thermal_storage(i)$Sw_TES_Investment]
 
     =e=
 

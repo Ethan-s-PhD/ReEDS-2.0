@@ -1,6 +1,6 @@
 ,nuclear_smr_tes_small
 timetype,seq
-endyear,2040
+endyear,2050
 GSw_Region,st/UT
 GSw_BatteryMandate,0
 GSw_Biopower,0
@@ -22,6 +22,7 @@ GSw_MinLoading,0
 GSw_Nuclear,1
 GSw_NuclearSMR,1
 GSw_NuclearSMRTES,1
+GSw_NuclearDemo,0
 GSw_OfsWind,0
 GSw_OnsWind6to10,0
 GSw_OpRes,0
@@ -38,3 +39,4 @@ GSw_Upgrades,0
 ivt_suffix,small
 numhintage,1
 debug,10
+GSw_TES_Investment,1
