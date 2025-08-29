@@ -9,7 +9,8 @@ GSw_CoalIGCC,0
 GSw_CoalNew,0
 GSw_CofireNew,0
 GSw_CSAPR,0
-GSw_CSP,0
+GSw_CSP,1
+plantchar_csp,csp_ATB_2024_advanced
 GSw_ForcePrescription,0
 GSw_GasCurve,2
 GSw_Geothermal,0
@@ -19,7 +20,7 @@ GSw_LfillGas,0
 GSw_MinCF,0
 GSw_Mingen,0
 GSw_MinLoading,0
-GSw_Nuclear,1
+GSw_Nuclear,0
 GSw_OfsWind,0
 GSw_OnsWind6to10,0
 GSw_OpRes,0

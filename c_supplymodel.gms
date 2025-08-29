@@ -2805,17 +2805,17 @@ eq_storage_level(i,v,r,h,t)$[valgen(i,v,r,t)$storage(i)$tmodel(t)]..
 
 *[minus] generation from stand-alone storage (discharge) and CSP
 *exclude hybrid+storage plant because GEN refers to output from both the plant and the battery
-    - hours_daily(h) * GEN(i,v,r,h,t)$[not storage_hybrid(i)$(not csp(i))]
+*    - hours_daily(h) * GEN(i,v,r,h,t)$[not storage_hybrid(i)$(not csp(i))]
 
 *[minus] Generation from Battery (discharge) of hybrid+storage plant
     - hours_daily(h) * GEN_STORAGE(i,v,r,h,t) $[storage_hybrid(i)$(not csp(i))$Sw_HybridPlant]
 
 *[minus] losses from reg reserves (only half because only charging half
 *the time while providing reg reserves)
-    - (hours_daily(h)
-       * (OPRES("reg",i,v,r,h,t)$[Sw_OpRes=1] + OPRES("combo",i,v,r,h,t)$[Sw_OpRes=2])
-       * (1 - storage_eff(i,t)) / 2 * reg_energy_frac
-    )$[opres_h(h)]
+*    - (hours_daily(h)
+*       * (OPRES("reg",i,v,r,h,t)$[Sw_OpRes=1] + OPRES("combo",i,v,r,h,t)$[Sw_OpRes=2])
+*       * (1 - storage_eff(i,t)) / 2 * reg_energy_frac
+*    )$[opres_h(h)]
 ;
 
 * ---------------------------------------------------------------------------
