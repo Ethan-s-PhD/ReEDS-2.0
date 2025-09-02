@@ -5595,15 +5595,10 @@ storage_eff(i,t)$pvb(i) = storage_eff("battery_%GSw_pvb_dur%",t) ;
 parameter storage_eff_pvb_p(i,t) "--fraction-- efficiency of hybrid PV+battery when charging from the coupled PV"
           storage_eff_pvb_g(i,t) "--fraction-- efficiency of hybrid PV+battery when charging from the grid" ;
 
-parameter storage_eff_tes(i,t) "--fraction-- efficiency of tes when charging from the coupled heat plant" ;
-
 *when charging from PV the pvb system will have a higher efficiency due to one less inverter conversion
 storage_eff_pvb_p(i,t)$pvb(i) = storage_eff(i,t) / inverter_efficiency ;
 *when charging from the grid the efficiency will be the same as standalone storage
 storage_eff_pvb_g(i,t)$pvb(i) = storage_eff("battery_%GSw_pvb_dur%",t) ;
-
-*set storage_eff_tes to 1 for now
-storage_eff_tes(i,t)$thermal_storage(i) = 1 ;
 
 *upgrade plants assume the same as what theyre upgraded to
 storage_eff(i,t)$upgrade(i) = sum{ii$upgrade_to(i,ii), storage_eff(ii,t) } ;

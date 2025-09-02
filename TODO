@@ -1,6 +1,12 @@
-- [ ] Update c_supplymodel.gms
- - [ ] Delete all instances of GEN_TES, CAP_TES, and STORAGE_IN_TES
- - [ ] Fix c_supplymodel.gms to treat nuclear-SMR-TES and CSP as thermal storage technologies
- - [ ] add gen_heat and cap_heat constraints to c_supplymodel.gms
-- [ ] update b_inputs.gms
- - [ ] Update ramp rates for nuclear-SMR-TES in b_inputs.gms
+- [x] Update c_supplymodel.gms
+ - [x] Delete all instances of GEN_TES, CAP_TES, and STORAGE_IN_TES
+ - [x] Change c_supplymodel.gms to treat nuclear-SMR-TES and CSP as thermal storage technologies
+ - [x] Add gen_heat and cap_heat constraints to c_supplymodel.gms
+- [ ] Update b_inputs.gms
+ - [ ] Change b_inputs.gms to treat nuclear-SMR-TES and CSP as thermal storage technologies
+ - [ ] Update ramp rates for nuclear-SMR-TES
+ - [ ] Update how b_inputs.gms handles plantchars for thermal storage technologies
+- [ ] Update c_supplyobjectives.gms
+- [ ] update e_reports.gms
+- [ ] update the plantchar handling in all relevant files
+- [ ] update ramp handling in all relevant files
