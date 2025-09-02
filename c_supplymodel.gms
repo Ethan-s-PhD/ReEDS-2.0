@@ -2841,18 +2841,14 @@ eq_storage_level(i,v,r,h,t)$[valgen(i,v,r,t)$storage(i)$tmodel(t)]..
 *[plus] energy into thermal plant tes
     + storage_eff_tes(i,t) *  hours_daily(h)
 *energy into thermal plant tes (not CSP-TES)
-      * STORAGE_IN_TES(i,v,r,h,t)$thermal_storage(i)
+      * STORAGE_IN_TES(i,v,r,h,t)$thermal_storage(i)$(not csp(i))
 
-*[minus] generation from stand-alone storage (discharge) and CSP
+*[minus] generation from stand-alone storage (discharge) and plants with thermal storage
 *exclude hybrid+storage plant and tes plant because GEN refers to output from both the plant and the battery
-    - hours_daily(h) * GEN(i,v,r,h,t)$[(not storage_hybrid(i))$(not csp(i))$(not thermal_storage(i))]
+    - hours_daily(h) * GEN(i,v,r,h,t)$[not storage_hybrid(i)$(not thermal_storage(i))]
 
 *[minus] Generation from Battery (discharge) of hybrid+storage plant
-    - hours_daily(h) * GEN_STORAGE(i,v,r,h,t) $[storage_hybrid(i)$(not csp(i))$(not thermal_storage(i))$Sw_HybridPlant]
-
-*[minus] generation from tes (discharge)
-*exclude hybrid+storage plant because GEN refers to output from both the plant and the battery
-    - hours_daily(h) * GEN_TES(i,v,r,h,t)$thermal_storage(i)
+    - hours_daily(h) * GEN_STORAGE(i,v,r,h,t) $[storage_hybrid(i)$(not thermal_storage(i))$Sw_HybridPlant]
 
 *[minus] losses from reg reserves (only half because only charging half
 *the time while providing reg reserves)
@@ -2867,19 +2863,16 @@ eq_storage_level(i,v,r,h,t)$[valgen(i,v,r,t)$storage(i)$tmodel(t)]..
 *there must be sufficient energy in storage to provide operating reserves
 eq_storage_opres(i,v,r,h,t)
     $[valgen(i,v,r,t)$tmodel(t)$Sw_OpRes$opres_h(h)
-    $(storage_standalone(i) or storage_hybrid(i) or thermal_storage(i)$(not csp(i)) or hyd_add_pump(i))]..
+    $(storage_standalone(i) or storage_hybrid(i)$(not thermal_storage(i)) or hyd_add_pump(i))]..
 
 *[plus] initial storage level
     STORAGE_LEVEL(i,v,r,h,t)
 
 *[minus] generation that occurs during this timeslice
-    - hours_daily(h) * GEN(i,v,r,h,t) $[not storage_hybrid(i)$(not csp(i))$(not thermal_storage(i))]
+    - hours_daily(h) * GEN(i,v,r,h,t) $[not storage_hybrid(i)$(not thermal_storage(i))]
 
 *[minus] generation that occurs during this timeslice
-    - hours_daily(h) * GEN_STORAGE(i,v,r,h,t) $[storage_hybrid(i)$(not csp(i))$Sw_HybridPlant]
-
-*[minus] generation that occurs during this timeslice
-    - hours_daily(h) * GEN_TES(i,v,r,h,t) $[thermal_storage(i)$(not csp(i))$Sw_NuclearSMRTES]
+    - hours_daily(h) * GEN_STORAGE(i,v,r,h,t) $[storage_hybrid(i)$(not thermal_storage(i))$Sw_HybridPlant]
 
 *[minus] losses from reg reserves (only half because only charging half
 *the time while providing reg reserves)
