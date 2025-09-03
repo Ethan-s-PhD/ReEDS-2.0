@@ -3,10 +3,18 @@
  - [x] Change c_supplymodel.gms to treat nuclear-SMR-TES and CSP as thermal storage technologies
  - [x] Add gen_heat and cap_heat constraints to c_supplymodel.gms
 - [ ] Update b_inputs.gms
- - [ ] Change b_inputs.gms to treat nuclear-SMR-TES and CSP as thermal storage technologies
+ - [x] Change b_inputs.gms to treat nuclear-SMR-TES and CSP as thermal storage technologies
  - [ ] Update ramp rates for nuclear-SMR-TES
  - [ ] Update how b_inputs.gms handles plantchars for thermal storage technologies
+- [ ] Update case files
+ - [ ] Update Sw_HybridPlant in case files
+ - [ ] Update Sw_Thermal in case files
 - [ ] Update c_supplyobjectives.gms
+ - [ ] Change c_supplyobjectives.gms to treat nuclear-SMR-TES and CSP as thermal storage technologies
+ - [ ] Update ramp rates for nuclear-SMR-TES
+ - [ ] Update how c_supplyobjectives.gms handles plantchars for thermal storage technologies
+- [ ] Update plantcostprep.py
 - [ ] update e_reports.gms
 - [ ] update the plantchar handling in all relevant files
 - [ ] update ramp handling in all relevant files
+- [ ] run and debug

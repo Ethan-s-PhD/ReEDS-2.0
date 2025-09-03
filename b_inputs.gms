@@ -666,6 +666,10 @@ if(Sw_CSP = 1,
   ban(i)$i_subsets(i,'csp2') = yes ;
 ) ;
 
+if(SW_Thermal = 0,
+  ban(i)$[i_subsets(i,'thermal_storage')$(not sameas(i,'csp_storage'))] = yes ;
+) ;
+
 if(Sw_CoalIGCC = 0,
   ban('Coal-IGCC') = yes ;
 ) ;
@@ -764,23 +768,9 @@ $else.pshwat
 $endif.pshwat
 
 *** Restrict valcap for hybrid storage techs based on Sw_HybridPlant switch
-* 0: Ban all storage, including CSP
+* 0: Ban all storage, excluding thermal and CSP (note thermal_storage and csp_storage bans are controlled by SW_thermal and Sw_CSP)
 if(Sw_HybridPlant = 0,
- ban(i)$i_subsets(i,'storage_hybrid') = yes ;
-) ;
-* 1: Allow CSP, ban all other storage
-if(Sw_HybridPlant = 1,
- ban(i)$[i_subsets(i,'storage_hybrid')$(not sameas(i,'csp_storage'))] = yes ;
- ban(i)$i_subsets(i,'csp_storage') = no ;
-) ;
-* 2: Allow hybrid plants, excluding CSP
-if(Sw_HybridPlant = 2,
- ban(i)$[i_subsets(i,'storage_hybrid')$(not sameas(i,'csp_storage'))] = no ;
- ban(i)$i_subsets(i,'csp_storage') = yes ;
-) ;
-* 3: Allow CSP and all other hybrid plants (note csp_storage bans are controlled by Sw_CSP)
-if(Sw_HybridPlant = 3,
- ban(i)$[i_subsets(i,'storage_hybrid')$(not sameas(i,'csp_storage'))] = no ;
+ ban(i)$[i_subsets(i,'storage_hybrid')$(not sameas(i,'thermal_storage'))] = yes ;
 ) ;
 
 *ban techs in hybrid PV+battery if the switch calls for it
