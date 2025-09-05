@@ -666,7 +666,7 @@ if(Sw_CSP = 1,
   ban(i)$i_subsets(i,'csp2') = yes ;
 ) ;
 
-if(SW_Thermal = 0,
+if(Sw_ThermalStorage = 0,
   ban(i)$[i_subsets(i,'thermal_storage')$(not sameas(i,'csp_storage'))] = yes ;
 ) ;
 
@@ -4334,11 +4334,11 @@ cost_vom_pvb_b(i,v,r,t)$pvb(i) =  cost_vom("battery_%GSw_pvb_dur%",v,r,t) ;
 
 * Assign hybrid plant to have the same value as UPV
 parameter cost_vom_hybrid_plant(i,v,r,t) "--2004$/MWh-- variable OM for the plant portion of hybrid" ;
-cost_vom_hybrid_plant(i,v,r,t)$[storage_hybrid(i)$(not csp(i))] =  sum{ii$[upv(ii)$rsc_agg(ii,i)], cost_vom(ii,v,r,t) } ;
+cost_vom_hybrid_plant(i,v,r,t)$[storage_hybrid(i)$(not thermal_storage(i))] =  sum{ii$[upv(ii)$rsc_agg(ii,i)], cost_vom(ii,v,r,t) } ;
 
 * Assign hybrid storage to have the same value as Battery_X
 parameter cost_vom_hybrid_storage(i,v,r,t) "--2004$/MWh-- variable OM for the storage portion of hybrid" ;
-cost_vom_hybrid_storage(i,v,r,t)$[storage_hybrid(i)$(not csp(i))] = cost_vom("battery_%GSw_pvb_dur%",v,r,t) ;
+cost_vom_hybrid_storage(i,v,r,t)$[storage_hybrid(i)$(not thermal_storage(i))] = cost_vom("battery_%GSw_pvb_dur%",v,r,t) ;
 
 *upgrade vom costs for initial classes are the vom costs for that tech
 *plus the delta between upgrade_to and upgrade_from for the initial year

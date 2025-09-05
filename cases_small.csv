@@ -34,9 +34,9 @@ GSw_RGGI,0
 GSw_SkipAugurYear,2030
 GSw_StateCap,0
 GSw_StateRPS,0
-GSw_Storage,0
+GSw_Storage,1
+GSw_ThermalStorage,1
 GSw_Upgrades,0
 ivt_suffix,small
 numhintage,1
 debug,10
-GSw_TES_Investment,1
