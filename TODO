@@ -6,12 +6,12 @@
  - [x] Change b_inputs.gms to treat nuclear-SMR-TES and CSP as thermal storage technologies
 - [x] Update case files
  - [x] Update Sw_Thermal in case files
-- [ ] Update c_supplyobjectives.gms
- - [ ] Change c_supplyobjectives.gms to treat nuclear-SMR-TES and CSP as thermal storage technologies
- - [ ] Update ramp rates for nuclear-SMR-TES
- - [ ] Update how c_supplyobjectives.gms handles plantchars for thermal storage technologies
-- [ ] Update plantcostprep.py
-- [ ] update e_reports.gms
-- [ ] update the plantchar handling in all relevant files
-- [ ] update ramp handling in all relevant files
+- [x] Update c_supplyobjectives.gms
+ - [x] Change c_supplyobjectives.gms to treat nuclear-SMR-TES and CSP as thermal storage technologies
+- [x] Update ramp rates for nuclear-SMR-TES
+- [x] update e_reports.gms
+
+
 - [ ] run and debug
+
+- [ ] Update start costs for nuclear-SMR-TES

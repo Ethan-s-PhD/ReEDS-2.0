@@ -2745,7 +2745,7 @@ eq_storage_capacity(i,v,r,h,t)
 
 * [plus] Storage charging
 * excludes hybrid plant+storage and adjusting evmc_storage for time-varying charge (add back deferred EV load) availability
-    + STORAGE_IN(i,v,r,h,t)$[not storage_hybrid(i)$(not thermal_storage(i))$(not thermal_storage(i))] / (1$(not evmc_storage(i)) + evmc_storage_charge_frac(i,r,h,t)$evmc_storage(i))
+    + STORAGE_IN(i,v,r,h,t)$[(not storage_hybrid(i))$(not thermal_storage(i))] / (1$(not evmc_storage(i)) + evmc_storage_charge_frac(i,r,h,t)$evmc_storage(i))
    
 * hybrid+storage plant: plant generation
     + STORAGE_IN_PLANT(i,v,r,h,t)$[storage_hybrid(i)$(not thermal_storage(i))$dayhours(h)$Sw_HybridPlant]
@@ -2789,7 +2789,7 @@ eq_storage_level(i,v,r,h,t)$[valgen(i,v,r,t)$storage(i)$tmodel(t)]..
         + (CAP(i,v,r,t) * csp_sm(i) * m_cf(i,v,r,h,t)
           )$[CSP_Storage(i)$valcap(i,v,r,t)]
 
-        + (GEN_HEAT(i,v,r,h,t)$[thermal_storage(i)$(not csp(i))]
+        + GEN_HEAT(i,v,r,h,t)$[thermal_storage(i)$(not csp(i))]
       )
 *[plus] water inflow energy available for hydropower that adds pumping
     + (CAP(i,v,r,t) * avail(i,r,h) * hours_daily(h) *

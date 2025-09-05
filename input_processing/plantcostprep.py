@@ -249,8 +249,6 @@ alldata['fom'] = alldata['fom']*1000
 alldata['capcost'] = alldata['capcost'].round(0).astype(int)
 alldata['fom'] = alldata['fom'].round(0).astype(int)
 alldata['vom'] = alldata['vom'].round(4)
-print("plantcostprep.py vom check")
-print(alldata[alldata['i'].str.contains('Nuclear-SMR-TES')][['i','t','vom']])
 alldata['heatrate'] = alldata['heatrate'].round(4)
 
 # Fill empty values with 0, melt to long format
