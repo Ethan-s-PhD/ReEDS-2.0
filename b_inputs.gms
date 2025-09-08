@@ -735,7 +735,10 @@ if(Sw_NuclearSMR = 0,
 ) ;
 
 if(Sw_NuclearSMRTES = 0,
-  ban("Nuclear-SMR-TES") = yes ;
+  ban("Nuclear-SMR-TES_1") = yes ;
+  ban("Nuclear-SMR-TES_2") = yes ;
+  ban("Nuclear-SMR-TES_3") = yes ;
+  ban("Nuclear-SMR-TES_4") = yes ;
 ) ;
 
 if(Sw_OfsWind = 0,
@@ -770,7 +773,21 @@ $endif.pshwat
 *** Restrict valcap for hybrid storage techs based on Sw_HybridPlant switch
 * 0: Ban all storage, excluding thermal and CSP (note thermal_storage and csp_storage bans are controlled by SW_thermal and Sw_CSP)
 if(Sw_HybridPlant = 0,
- ban(i)$[i_subsets(i,'storage_hybrid')$(not sameas(i,'thermal_storage'))] = yes ;
+ ban(i)$i_subsets(i,'storage_hybrid') = yes ;
+) ;
+* 1: Allow CSP, ban all other storage
+if(Sw_HybridPlant = 1,
+ ban(i)$[i_subsets(i,'storage_hybrid')$(not sameas(i,'csp_storage'))] = yes ;
+ ban(i)$i_subsets(i,'csp_storage') = no ;
+) ;
+* 2: Allow hybrid plants, excluding CSP
+if(Sw_HybridPlant = 2,
+ ban(i)$[i_subsets(i,'storage_hybrid')$(not sameas(i,'csp_storage'))] = no ;
+ ban(i)$i_subsets(i,'csp_storage') = yes ;
+) ;
+* 3: Allow CSP and all other hybrid plants (note csp_storage bans are controlled by Sw_CSP)
+if(Sw_HybridPlant = 3,
+ ban(i)$[i_subsets(i,'storage_hybrid')$(not sameas(i,'csp_storage'))] = no ;
 ) ;
 
 *ban techs in hybrid PV+battery if the switch calls for it
@@ -870,7 +887,10 @@ bannew(i)$[sum{ctt_i_ii(i,'Nuclear'), i_ctt(i,'d') }] = YES ;
 bannew(i)$[sum{ctt_i_ii(i,'coal-CCS_mod'), i_ctt(i,'d') }] = YES ;
 bannew(i)$[sum{ctt_i_ii(i,'coal-CCS_max'), i_ctt(i,'d') }] = YES ;
 bannew(i)$[sum{ctt_i_ii(i,'Nuclear-SMR'), i_ctt(i,'d') }] = YES ;
-bannew(i)$[sum{ctt_i_ii(i,'Nuclear-SMR-TES'), i_ctt(i,'d') }] = YES ;
+bannew(i)$[sum{ctt_i_ii(i,'Nuclear-SMR-TES_1'), i_ctt(i,'d') }] = YES ;
+bannew(i)$[sum{ctt_i_ii(i,'Nuclear-SMR-TES_2'), i_ctt(i,'d') }] = YES ;
+bannew(i)$[sum{ctt_i_ii(i,'Nuclear-SMR-TES_3'), i_ctt(i,'d') }] = YES ;
+bannew(i)$[sum{ctt_i_ii(i,'Nuclear-SMR-TES_4'), i_ctt(i,'d') }] = YES ;
 
 *ban and bannew all non-numeraire techs that are derived from ban numeraire techs
 ban(i)$sum{ii$ban(ii), ctt_i_ii(i,ii) } = YES ;
@@ -1016,7 +1036,7 @@ storage_hybrid(i)$(not ban(i))      = yes$i_subsets(i,'storage_hybrid') ;
 storage_interday(i)$(not ban(i))    = yes$i_subsets(i,'storage_interday') ;
 storage_standalone(i)$(not ban(i))  = yes$i_subsets(i,'storage_standalone') ;
 storage(i)$(not ban(i))             = yes$i_subsets(i,'storage') ;
-thermal_storage(i)     = yes$i_subsets(i,'thermal_storage') ;
+thermal_storage(i)$(not ban(i))     = yes$i_subsets(i,'thermal_storage') ;
 upv(i)$(not ban(i))                 = yes$i_subsets(i,'upv') ;
 vre_distributed(i)$(not ban(i))     = yes$i_subsets(i,'vre_distributed') ;
 vre_no_csp(i)$(not ban(i))          = yes$i_subsets(i,'vre_no_csp') ;
@@ -2941,10 +2961,6 @@ set RPSCat_i(RPSCat,i,st)     "mapping between rps category and technologies for
 Parameter RecPerc(RPSCat,st,t)     "--fraction-- fraction of total generation for each state that must be met by RECs for each category"
           RPSTechMult(RPSCat,i,st) "--fraction-- fraction of generation from each technology that counts towards the requirement for each category"
 ;
-
-parameter tes_requirement(i,t) "--float-- required investment in thermal storage for each technology and year" ;
-
-tes_requirement(i,t)$thermal_storage(i) =  0;
 
 * Create a new r-to-state mapping set that allows voluntary purchases
 r_st_rps(r,st) = r_st(r,st) ;

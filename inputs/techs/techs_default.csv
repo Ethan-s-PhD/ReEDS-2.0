@@ -39,7 +39,10 @@ lfill-gas,p
 MHKwave,p
 Nuclear,p
 Nuclear-SMR,p
-Nuclear-SMR-TES,p
+Nuclear-SMR-TES_1,p
+Nuclear-SMR-TES_2,p
+Nuclear-SMR-TES_3,p
+Nuclear-SMR-TES_4,p
 Ocean,p
 o-g-s,p
 pumped-hydro,p

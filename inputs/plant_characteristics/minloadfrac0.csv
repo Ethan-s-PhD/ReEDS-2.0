@@ -25,7 +25,10 @@ hydro ,0.5
 lfill-gas ,0.4
 nuclear ,0.7
 nuclear-SMR ,0.2
-nuclear-SMR-TES ,0.2
+nuclear-SMR-TES_1 ,0.2
+nuclear-SMR-TES_2 ,0.2
+nuclear-SMR-TES_3 ,0.2
+nuclear-SMR-TES_4 ,0.2
 o-g-s ,0.5
 H2-CC,0.38
 H2-CT,0.42
