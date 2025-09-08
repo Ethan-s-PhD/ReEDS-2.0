@@ -10,7 +10,7 @@ GSw_CoalNew,0
 GSw_CofireNew,0
 GSw_CSAPR,0
 GSw_CSP,0
-GSw_ForcePrescription,0
+GSw_ForcePrescription,1
 GSw_GasCurve,2
 GSw_Geothermal,0
 GSw_H2CT,0
@@ -22,7 +22,7 @@ GSw_MinLoading,0
 GSw_Nuclear,1
 GSw_NuclearSMR,1
 GSw_NuclearSMRTES,1
-GSw_NuclearDemo,0
+GSw_NuclearDemo,1
 GSw_OfsWind,0
 GSw_OnsWind6to10,0
 GSw_OpRes,0
@@ -36,6 +36,7 @@ GSw_StateCap,0
 GSw_StateRPS,0
 GSw_Storage,1
 GSw_ThermalStorage,1
+GSw_HybridPlant,3
 GSw_Upgrades,0
 ivt_suffix,small
 numhintage,1

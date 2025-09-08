@@ -330,6 +330,7 @@ set
   lfill(i)             "land-fill gas technologies",
   nondispatch(i)       "technologies that are not dispatchable"
   nuclear(i)           "nuclear technologies",
+  nuclear_smr_tes(i)   "nuclear small modular reactor with thermal energy storage technologies",
   ofswind(i)           "offshore wind technologies",
   ogs(i)               "oil-gas-steam technologies",
   onswind(i)           "onshore wind technologies",

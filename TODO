@@ -1,17 +1,4 @@
-- [x] Update c_supplymodel.gms
- - [x] Delete all instances of GEN_TES, CAP_TES, and STORAGE_IN_TES
- - [x] Change c_supplymodel.gms to treat nuclear-SMR-TES and CSP as thermal storage technologies
- - [x] Add gen_heat and cap_heat constraints to c_supplymodel.gms
-- [x] Update b_inputs.gms
- - [x] Change b_inputs.gms to treat nuclear-SMR-TES and CSP as thermal storage technologies
-- [x] Update case files
- - [x] Update Sw_Thermal in case files
-- [x] Update c_supplyobjectives.gms
- - [x] Change c_supplyobjectives.gms to treat nuclear-SMR-TES and CSP as thermal storage technologies
-- [x] Update ramp rates for nuclear-SMR-TES
-- [x] update e_reports.gms
-
-
-- [ ] run and debug
+- [ ] set mingen_fixed for nuclear-SMR-TES in mingen_fixed.csv to limit gen_heat instead of gen
+- [ ] add constraints on rampup_heat and a separate start cost for the heat generating nuclear island
 
 - [ ] Update start costs for nuclear-SMR-TES

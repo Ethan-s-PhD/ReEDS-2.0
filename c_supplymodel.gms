@@ -299,7 +299,7 @@ eq_interconnection_queues(tg,r,t)         "--MW-- capacity deployment limit base
  eq_hybrid_plant_energy_limit(i,v,r,allh,t) "--MW-- PV energy to storage (no curtailment recovery) + PV energy to inverter <= PV resource"
  eq_plant_capacity_limit(i,v,r,allh,t)      "--MW-- energy moving through the inverter cannot exceed the inverter capacity"
  eq_pvb_itc_charge_reqt(i,v,r,t)            "--MWh-- total energy charged from local PV >= ITC qualification fraction * total energy charged"
- eq_plant_thermal_cap(i,v,r,h,t)            "--MW-- thermal generation of hybrid plant must be less than or equal to the thermal capacity of the plant"
+ eq_plant_thermal_cap(i,v,r,allh,t)            "--MW-- thermal generation of hybrid plant must be less than or equal to the thermal capacity of the plant"
 
 * Canadian imports balance
  eq_Canadian_Imports(r,allszn,t)          "--MWh-- Balance of Canadian imports by season"
@@ -1180,7 +1180,9 @@ eq_mingen_fixed(i,v,r,h,t)
     $[Sw_MingenFixed$tmodel(t)$mingen_fixed(i)$valgen(i,v,r,t)
     $(yeart(t)>=Sw_StartMarkets)]..
 
-    GEN(i,v,r,h,t)
+    GEN(i,v,r,h,t)$(not nuclear_smr_tes(i))
+
+    + GEN_HEAT(i,v,r,h,t)$nuclear_smr_tes(i)
 
     =g=
 
@@ -3139,7 +3141,7 @@ eq_plant_thermal_cap(i,v,r,h,t)$[thermal_storage(i)$(not csp(i))$tmodel(t)$valca
 
     =g=
 
-    GEN_HEAT(i,v,r,h,t)
+    + GEN_HEAT(i,v,r,h,t)
 ;
 
 * ---------------------------------------------------------------------------
