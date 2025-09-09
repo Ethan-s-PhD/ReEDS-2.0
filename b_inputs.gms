@@ -1020,6 +1020,7 @@ hydro(i)$(not ban(i))               = yes$i_subsets(i,'hydro') ;
 lfill(i)$(not ban(i))               = yes$i_subsets(i,'lfill') ;
 nondispatch(i)$(not ban(i))         = yes$i_subsets(i,'nondispatch') ;
 nuclear(i)$(not ban(i))             = yes$i_subsets(i,'nuclear') ;
+nuclear_smr_tes(i)$(not ban(i))     = yes$i_subsets(i,'nuclear_smr_tes') ;
 ofswind(i)$(not ban(i))             = yes$i_subsets(i,'ofswind') ;
 ogs(i)$(not ban(i))                 = yes$i_subsets(i,'ogs') ;
 onswind(i)$(not ban(i))             = yes$i_subsets(i,'onswind') ;
