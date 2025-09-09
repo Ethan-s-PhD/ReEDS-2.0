@@ -4265,7 +4265,8 @@ $onlisting
 * Assign a battery capacity ratio to each hybrid PV+battery technology
 parameter bcr(i) "--unitless-- ratio of the battery capacity to the PV DC capacity (battery capacity ratio)" ;
 bcr(pvb) = sum{pvb_config$pvb_agg(pvb_config,pvb), bir_pvb_config(pvb_config) / ilr_pvb_config(pvb_config) } ;
-bcr(i)$[storage_standalone(i) or csp_storage(i) or hyd_add_pump(i) or thermal_storage(i)] = 1 ;
+bcr(i)$[storage_standalone(i) or csp_storage(i) or hyd_add_pump(i)] = 1 ;
+bcr(i)$nuclear_smr_tes(i) = 1.45 ;
 
 *=========================================
 * --- Capital costs ---

@@ -23,7 +23,6 @@ positive variables
   CAP_SDBIN(i,v,r,ccseason,sdbin,t)        "--MW-- generation power capacity by storage duration bin for relevant technologies"
   CAP_SDBIN_ENERGY(i,v,r,ccseason,sdbin,t) "--MWh-- generation energy capacity by storage duration bin for relevant technologies"
   CAP(i,v,r,t)                             "--MW-- total generation capacity in MWac (MWdc for PV); PV capacity of hybrid PV+battery; max native, flexible EV load for EVMC"
-  CAP_HEAT(i,v,r,t)                        "--MW-- total heat generation capacity in MW"
   CAP_ENERGY(i,v,r,t)                      "--MWh-- battery capacity in terms of energy"
   CAP_ABOVE_LIM(tg,r,t)                    "--MW-- amount of capacity that is deployed above the interconnection queue limits"
   CAP_RSC(i,v,r,rscbin,t)                  "--MW-- total generation capacity in MWac (MWdc for PV) for wind-ons and upv"
@@ -1186,7 +1185,9 @@ eq_mingen_fixed(i,v,r,h,t)
 
     =g=
 
-    mingen_fixed(i) * avail(i,r,h) *  CAP(i,v,r,t)
+    mingen_fixed(i) * avail(i,r,h) *  CAP(i,v,r,t)$(not nuclear_smr_tes(i))
+
+    + mingen_fixed(i) * avail(i,r,h) *  CAP(i,v,r,t)$nuclear_smr_tes(i) / (bcr(i)$nuclear_smr_tes(i) + 1$(not nuclear_smr_tes(i)))
 ;
 
 * ---------------------------------------------------------------------------
@@ -1377,7 +1378,9 @@ eq_ramping(i,r,h,hh,t)
 
     =g=
     
-    sum{v$valgen(i,v,r,t), GEN(i,v,r,hh,t) - GEN(i,v,r,h,t) }
+    sum{v$valgen(i,v,r,t), GEN(i,v,r,hh,t) - GEN(i,v,r,h,t) }$(not nuclear_smr_tes(i))
+    
+    + sum{v$valgen(i,v,r,t), GEN_HEAT(i,v,r,hh,t) - GEN_HEAT(i,v,r,h,t) }$nuclear_smr_tes(i)
 ;
 
 *=======================================
@@ -3137,7 +3140,7 @@ eq_pvb_itc_charge_reqt(i,v,r,t)$[pvb(i)$tmodel(t)$valgen(i,v,r,t)$pvb_itc_qual_f
 * ---------------------------------------------------------------------------
 eq_plant_thermal_cap(i,v,r,h,t)$[thermal_storage(i)$(not csp(i))$tmodel(t)$valcap(i,v,r,t)$Sw_HybridPlant]..
 
-    CAP_HEAT(i,v,r,t)
+    CAP(i,v,r,t) / bcr(i)
 
     =g=
 

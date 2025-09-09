@@ -670,7 +670,6 @@ stor_interday_level(i,v,r,allszn,t)$[valgen(i,v,r,t)$storage_interday(i)] = STOR
 stor_interday_dispatch(i,v,r,h,t)$[valgen(i,v,r,t)$storage_interday(i)] = STORAGE_INTERDAY_DISPATCH.l(i,v,r,h,t) ;
 
 * tes outputs
-smrtes_cap_heat(i,v,r,t)$[thermal_storage(i)$(not csp(i))$valgen(i,v,r,t)] = CAP_HEAT.l(i,v,r,t) ;
 smrtes_gen_heat(i,v,r,h,t)$[thermal_storage(i)$(not csp(i))$valgen(i,v,r,t)] = GEN_HEAT.l(i,v,r,h,t) ;
 
 *=====================================================================

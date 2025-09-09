@@ -7,8 +7,6 @@
   CAP_SDBIN.lo(i,v,r,ccseason,sdbin,t)$tmodel(t) = 0 ;
     CAP_SDBIN_ENERGY.lo(i,v,r,ccseason,sdbin,t)$tmodel(t) = 0 ;
     CAP.lo(i,v,r,t)$tmodel(t) = 0 ;
-    CAP_HEAT.lo(i,v,r,t)$tmodel(t) = 0 ;
-    CAP_TES.lo(i,v,r,t)$tmodel(t) = 0 ;
     CAP_ENERGY.lo(i,v,r,t)$tmodel(t) = 0 ;
     INV.lo(i,v,r,t)$tmodel(t) = 0 ;
     INV_ENERGY.lo(i,v,r,t)$tmodel(t) = 0 ;
@@ -85,7 +83,6 @@ GROWTH_BIN(gbin,i,st,t).up$tmodel(t) = +inf ;
 CAP_SDBIN.up(i,v,r,ccseason,sdbin,t)$tmodel(t) = +inf ;
 CAP_SDBIN_ENERGY.up(i,v,r,ccseason,sdbin,t)$tmodel(t) = +inf ;
 CAP.up(i,v,r,t)$tmodel(t) = +inf ;
-CAP_HEAT.up(i,v,r,t)$tmodel(t) = +inf ;
 CAP_TES.up(i,v,r,t)$tmodel(t) = +inf ;
 CAP_ENERGY.up(i,v,r,t)$tmodel(t) = +inf ;
 INV.up(i,v,r,t)$tmodel(t) = +inf ;

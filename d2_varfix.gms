@@ -7,7 +7,6 @@
 
 * capacity and investment variables
     CAP.fx(i,v,r,tfix)$[valcap(i,v,r,tfix)] = CAP.l(i,v,r,tfix) ;
-    CAP_HEAT.fx(i,v,r,tfix)$[thermal_storage(i)$(not csp(i))$valcap(i,v,r,tfix)$Sw_NuclearSMRTES] = CAP_HEAT.l(i,v,r,tfix) ;
     CAP_ENERGY.fx(i,v,r,tfix)$[valcap(i,v,r,tfix)$continuous_battery(i)] = CAP_ENERGY.l(i,v,r,tfix) ;
     CAP_ABOVE_LIM.fx(tg,r,tfix)$[(yeart(tfix)>=model_builds_start_yr)
                                  $(sum{(tgg,rr), cap_limit(tgg,rr,tfix)})
