@@ -32,6 +32,11 @@ scenario,scenario_custom_colors,tech,tech_custom_colors
 ,,battery_72,#9B334F
 ,,battery_100,#9B454F
 ,,battery_li,#9B574F
+,,mstes,#FF5000
+,,mstes_6,#FFC4A9
+,,mstes_8,#FF8953
+,,mstes_10,#FF8953
+,,mstes_12,#FF6924
 ,,storage-h2,#FF7FBB
 ,,Canada,#193A71
 ,,coal-ccs_mod,#707685

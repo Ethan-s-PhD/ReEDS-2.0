@@ -328,6 +328,7 @@ set
   hydro_nd(i)          "non-dispatchable hydro technologies",
   hydro(i)             "hydro technologies",
   lfill(i)             "land-fill gas technologies",
+  mstes(i)             "mstes storage technologies",
   nondispatch(i)       "technologies that are not dispatchable"
   nuclear(i)           "nuclear technologies",
   ofswind(i)           "offshore wind technologies",
@@ -862,6 +863,18 @@ continuous_battery(i)$(Sw_Storage = 0 or Sw_Storage = 1
                   or Sw_Storage = 3 or Sw_Storage = 4
                   or Sw_Storage = 5 or Sw_Storage = 6) = no ;
 
+
+*ban techs in mstes if the switch calls for it
+if(Sw_MSTES = 0,
+  ban(i)$i_subsets(i,'mstes') = yes ;
+  bannew(i)$i_subsets(i,'mstes') = yes ;
+) ;
+
+if(Sw_MSTES = 1,
+  ban(i)$i_subsets(i,'mstes') = no ;
+  bannew(i)$i_subsets(i,'mstes') = no ;
+) ;
+
 * option to ban upgrades
 ban(i)$[upgrade(i)$(not Sw_Upgrades)] = yes ;
 bannew(i)$[upgrade(i)$(not Sw_Upgrades)] = yes ;
@@ -1002,6 +1015,7 @@ hydro_d(i)$(not ban(i))             = yes$i_subsets(i,'hydro_d') ;
 hydro_nd(i)$(not ban(i))            = yes$i_subsets(i,'hydro_nd') ;
 hydro(i)$(not ban(i))               = yes$i_subsets(i,'hydro') ;
 lfill(i)$(not ban(i))               = yes$i_subsets(i,'lfill') ;
+mstes(i)$(not ban(i))               = yes$i_subsets(i,'mstes') ;
 nondispatch(i)$(not ban(i))         = yes$i_subsets(i,'nondispatch') ;
 nuclear(i)$(not ban(i))             = yes$i_subsets(i,'nuclear') ;
 ofswind(i)$(not ban(i))             = yes$i_subsets(i,'ofswind') ;
@@ -1041,6 +1055,7 @@ tg_i('gas',i)$gas(i) = yes ;
 tg_i('coal',i)$coal(i) = yes ;
 tg_i('nuclear',i)$nuclear(i) = yes ;
 tg_i('battery',i)$battery(i) = yes ;
+tg_i('mstes',i)$mstes(i) = yes ;
 tg_i('hydro',i)$hydro(i) = yes ;
 tg_i('h2',i)$h2_ct(i) = yes ;
 tg_i('geothermal',i)$geo(i) = yes ;

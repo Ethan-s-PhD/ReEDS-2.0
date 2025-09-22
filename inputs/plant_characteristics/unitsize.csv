@@ -32,6 +32,7 @@ dupv,100,https://atb.nrel.gov/electricity/2022/utility-scale_pv
 wind-ons,200,https://atb.nrel.gov/electricity/2022/land-based_wind
 wind-ofs,1000,https://atb.nrel.gov/electricity/2022/offshore_wind
 battery,60,https://atb.nrel.gov/electricity/2022/utility-scale_battery_storage
+mstes,104,https://atb.nrel.gov/electricity/2022/concentrating_solar_power
 csp,104,https://atb.nrel.gov/electricity/2022/concentrating_solar_power
 pumped-hydro,1000,https://atb.nrel.gov/electricity/2022/pumped_storage_hydropower
 geothermal,30,https://atb.nrel.gov/electricity/2022/geothermal

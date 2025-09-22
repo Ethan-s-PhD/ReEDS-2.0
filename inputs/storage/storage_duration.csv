@@ -8,6 +8,10 @@ battery_24,24
 battery_48,48
 battery_72,72
 battery_100,100
+mstes_6,6
+mstes_8,8
+mstes_10,10
+mstes_14,14
 pumped-hydro,12
 pumped-hydro-flex,12
 CAES,12

@@ -168,6 +168,11 @@ battery_48,battery,#FF4A88
 battery_72,battery,#FF4A88
 battery_100,battery,#FF4A88
 battery_li,battery,#FF4A88
+mstes,mstes,#FF5000
+mstes_6,mstes,#FF5000
+mstes_8,mstes,#FF5000
+mstes_10,mstes,#FF5000
+mstes_14,mstes,#FF5000
 gas-CT,gas-ct,#C2A1DB
 gas-CC,gas-cc,#52216B
 pumped-hydro,phs,#FF4A88

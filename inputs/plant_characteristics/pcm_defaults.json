@@ -1273,6 +1273,58 @@
     "min_up_time": 7.0,
     "start_cost_per_MW": 5.3
   },
+  "mstes_6": {
+    "avg_capacity_MW": 200.0,
+    "forced_outage_rate": 2.0,
+    "maintenance_rate": 0.55,
+    "max_capacity_MW": 1000.0,
+    "max_ramp_up_percentage": null,
+    "mean_time_to_repair": 24.0,
+    "min_capacity_MW": 0.0,
+    "min_down_time": null,
+    "min_stable_level_percentage": null,
+    "min_up_time": null,
+    "start_cost_per_MW": null
+  },
+  "mstes_8": {
+    "avg_capacity_MW": 200.0,
+    "forced_outage_rate": 2.0,
+    "maintenance_rate": 0.55,
+    "max_capacity_MW": 1000.0,
+    "max_ramp_up_percentage": null,
+    "mean_time_to_repair": 24.0,
+    "min_capacity_MW": 0.0,
+    "min_down_time": null,
+    "min_stable_level_percentage": null,
+    "min_up_time": null,
+    "start_cost_per_MW": null
+  },
+  "mstes_10": {
+    "avg_capacity_MW": 200.0,
+    "forced_outage_rate": 2.0,
+    "maintenance_rate": 0.55,
+    "max_capacity_MW": 1000.0,
+    "max_ramp_up_percentage": null,
+    "mean_time_to_repair": 24.0,
+    "min_capacity_MW": 0.0,
+    "min_down_time": null,
+    "min_stable_level_percentage": null,
+    "min_up_time": null,
+    "start_cost_per_MW": null
+  },
+  "mstes_14": {
+    "avg_capacity_MW": 200.0,
+    "forced_outage_rate": 2.0,
+    "maintenance_rate": 0.55,
+    "max_capacity_MW": 1000.0,
+    "max_ramp_up_percentage": null,
+    "mean_time_to_repair": 24.0,
+    "min_capacity_MW": 0.0,
+    "min_down_time": null,
+    "min_stable_level_percentage": null,
+    "min_up_time": null,
+    "start_cost_per_MW": null
+  },
   "nuclear": {
     "avg_capacity_MW": 1239.94,
     "forced_outage_rate": 4.0,

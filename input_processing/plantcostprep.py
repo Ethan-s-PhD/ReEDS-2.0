@@ -237,7 +237,7 @@ caes['i'] = 'caes'
 #    -- Concat all data --    #
 ###############################
 
-alldata = pd.concat([conv,upv_stack,wind_stack,geo_stack,csp_stack,battery,
+alldata = pd.concat([conv,upv_stack,wind_stack,geo_stack,csp_stack,battery, mstes,
                      evmc_storage,evmc_shape,caes,beccs,ccsflex,h2ct],sort=False)
 
 if sw.upgradescen != 'default':

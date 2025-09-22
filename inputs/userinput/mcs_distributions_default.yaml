@@ -84,6 +84,13 @@
   dist_params: [1, 1, 1]
   weight_r: country
 
+  - name: mstes
+  assignments_list:
+    - plantchar_mstes: [mstes_ATB_2024_conservative, mstes_ATB_2024_moderate, mstes_ATB_2024_advanced]
+  dist: dirichlet
+  dist_params: [1, 1, 1]
+  weight_r: country
+
 - name: upv
   assignments_list:
     - plantchar_upv: [upv_ATB_2024_conservative, upv_ATB_2024_moderate, upv_ATB_2024_advanced]
@@ -117,6 +124,7 @@
 - name: tech
   assignments_list:
     - plantchar_battery: [battery_ATB_2024_conservative, battery_ATB_2024_moderate, battery_ATB_2024_advanced]
+    - plantchar_mstes: [mstes_ATB_2024_conservative, mstes_ATB_2024_moderate, mstes_ATB_2024_advanced]
     - plantchar_upv: [upv_ATB_2024_conservative, upv_ATB_2024_moderate, upv_ATB_2024_advanced]
     - plantchar_csp: [csp_ATB_2024_conservative, csp_ATB_2024_moderate, csp_ATB_2024_advanced]
     - plantchar_ofswind: [ofs-wind_ATB_2024_conservative, ofs-wind_ATB_2024_moderate, ofs-wind_ATB_2024_advanced]
@@ -129,6 +137,7 @@
 - name: tech_discrete
   assignments_list:
     - plantchar_battery: [battery_ATB_2024_conservative, battery_ATB_2024_moderate, battery_ATB_2024_advanced]
+    - plantchar_mstes: [mstes_ATB_2024_conservative, mstes_ATB_2024_moderate, mstes_ATB_2024_advanced]
     - plantchar_upv: [upv_ATB_2024_conservative, upv_ATB_2024_moderate, upv_ATB_2024_advanced]
     - plantchar_csp: [csp_ATB_2024_conservative, csp_ATB_2024_moderate, csp_ATB_2024_advanced]
     - plantchar_ofswind: [ofs-wind_ATB_2024_conservative, ofs-wind_ATB_2024_moderate, ofs-wind_ATB_2024_advanced]

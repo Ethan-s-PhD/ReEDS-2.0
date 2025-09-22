@@ -89,6 +89,10 @@ battery_48,battery_48
 battery_72,battery_72
 battery_100,battery_100
 battery_li,battery_li
+mstes_6,mstes_6
+mstes_8,mstes_8
+mstes_10,mstes_10
+mstes_14,mstes_14
 pumped-hydro_n*,pumped-hydro
 pumped-hydro-flex*,pumped-hydro-flex
 upv*,upv

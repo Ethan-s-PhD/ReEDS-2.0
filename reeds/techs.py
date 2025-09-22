@@ -96,7 +96,7 @@ def get_techlist_after_bans(case):
         techlist = [
             i for i in techlist if (
                 (i not in tech_subset_table.loc['STORAGE_STANDALONE'].values)
-                or (i in ['battery_4', 'battery_8', 'pumped-hydro'])
+                or (i in ['battery_4', 'battery_8', 'pumped-hydro', 'mstes_6', 'mstes_8', 'mstes_10', 'mstes_14'])
             )
         ]
     if not int(sw.GSw_CCSFLEX_BYP):
