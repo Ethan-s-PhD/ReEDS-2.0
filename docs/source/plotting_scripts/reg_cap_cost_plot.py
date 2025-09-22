@@ -28,6 +28,7 @@ def get_tech_mapping(reedspath, tech):
     # tech name mappings
     name_mappings = {
         "batteries": "BATTERY",
+        "tes": "TES",
         "biomass": "BIO",
         "coal_noccs": "COAL",
         "coal_ccs": "COAL_CCS",

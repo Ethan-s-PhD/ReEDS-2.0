@@ -220,6 +220,9 @@ continuous_battery = pd.read_csv(os.path.join(inputs_case,'plantchar_continuous_
 battery = deflate_func(battery, sw.plantchar_battery)
 continuous_battery = deflate_func(continuous_battery, sw.plantchar_battery)
 
+mstes = pd.read_csv(os.path.join(inputs_case,'plantchar_mstes.csv'))
+mstes = deflate_func(mstes, sw.plantchar_mstes)
+
 evmc_storage = pd.read_csv(os.path.join(inputs_case,'plantchar_evmc_storage.csv'))
 evmc_storage = deflate_func(evmc_storage, 'evmc_storage_' + sw.evmcscen)
 
