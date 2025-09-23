@@ -1,13 +1,13 @@
 ﻿file,i,Scenario,DisplayName
-mstes_ATB_2022_moderate,mstes_6,Moderate,Utility-Scale Molten Salt Thermal Storage - 6Hr
-mstes_ATB_2022_moderate,mstes_8,Moderate,Utility-Scale Molten Salt Thermal Storage - 8Hr
-mstes_ATB_2022_moderate,mstes_10,Moderate,Utility-Scale Molten Salt Thermal Storage - 10Hr
-mstes_ATB_2022_moderate,mstes_14,Moderate,Utility-Scale Molten Salt Thermal Storage - 14Hr
-mstes_ATB_2022_advanced,mstes_6,Advanced,Utility-Scale Molten Salt Thermal Storage - 6Hr
-mstes_ATB_2022_advanced,mstes_8,Advanced,Utility-Scale Molten Salt Thermal Storage - 8Hr
-mstes_ATB_2022_advanced,mstes_10,Advanced,Utility-Scale Molten Salt Thermal Storage - 10Hr
-mstes_ATB_2022_advanced,mstes_14,Advanced,Utility-Scale Molten Salt Thermal Storage - 14Hr
-mstes_ATB_2022_conservative,mstes_6,Conservative,Utility-Scale Molten Salt Thermal Storage - 6Hr
-mstes_ATB_2022_conservative,mstes_8,Conservative,Utility-Scale Molten Salt Thermal Storage - 8Hr
-mstes_ATB_2022_conservative,mstes_10,Conservative,Utility-Scale Molten Salt Thermal Storage - 10Hr
-mstes_ATB_2022_conservative,mstes_14,Conservative,Utility-Scale Molten Salt Thermal Storage - 14Hr
+tes_ATB_2022_moderate,tes_ms6,Moderate,Utility-Scale Molten Salt Thermal Storage - 6Hr
+tes_ATB_2022_moderate,tes_ms8,Moderate,Utility-Scale Molten Salt Thermal Storage - 8Hr
+tes_ATB_2022_moderate,tes_ms10,Moderate,Utility-Scale Molten Salt Thermal Storage - 10Hr
+tes_ATB_2022_moderate,tes_ms14,Moderate,Utility-Scale Molten Salt Thermal Storage - 14Hr
+tes_ATB_2022_advanced,tes_ms6,Advanced,Utility-Scale Molten Salt Thermal Storage - 6Hr
+tes_ATB_2022_advanced,tes_ms8,Advanced,Utility-Scale Molten Salt Thermal Storage - 8Hr
+tes_ATB_2022_advanced,tes_ms10,Advanced,Utility-Scale Molten Salt Thermal Storage - 10Hr
+tes_ATB_2022_advanced,tes_ms14,Advanced,Utility-Scale Molten Salt Thermal Storage - 14Hr
+tes_ATB_2022_conservative,tes_ms6,Conservative,Utility-Scale Molten Salt Thermal Storage - 6Hr
+tes_ATB_2022_conservative,tes_ms8,Conservative,Utility-Scale Molten Salt Thermal Storage - 8Hr
+tes_ATB_2022_conservative,tes_ms10,Conservative,Utility-Scale Molten Salt Thermal Storage - 10Hr
+tes_ATB_2022_conservative,tes_ms14,Conservative,Utility-Scale Molten Salt Thermal Storage - 14Hr

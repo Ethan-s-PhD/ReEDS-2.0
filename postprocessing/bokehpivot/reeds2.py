@@ -26,7 +26,7 @@ coststreams = ['eq_gasaccounting_regional','eq_gasaccounting_national','eq_bious
 vf_valstreams = ['eq_supply_demand_balance','eq_reserve_margin','eq_opres_requirement','eq_rec_requirement','eq_curt_gen_balance','eq_curtailment','eq_storage_in_max','eq_storage_in_min']
 # valuestreams = ['eq_supply_demand_balance','eq_reserve_margin','eq_opres_requirement','eq_rec_requirement','eq_national_gen','eq_annual_cap','eq_curt_gen_balance','eq_curtailment','eq_storage_in_max','eq_storage_in_min','eq_emit_accounting','eq_mingen_lb','eq_mingen_ub','eq_rps_ofswind']
 energy_valstreams = ['eq_supply_demand_balance','eq_curt_gen_balance','eq_curtailment','eq_storage_in_max','eq_storage_in_min']
-cc_techs = ['hydro','wind-ons','wind-ofs','csp','upv','pumped-hydro','pumped-hydro-flex','battery', 'battery_2', 'battery_4', 'battery_6', 'battery_8', 'battery_10', 'battery_12', 'battery_24', 'battery_48', 'battery_72', 'battery_100', 'mstes_6', 'mstes_8', 'mstes_10', 'mstes_14']
+cc_techs = ['hydro','wind-ons','wind-ofs','csp','upv','pumped-hydro','pumped-hydro-flex','battery', 'battery_2', 'battery_4', 'battery_6', 'battery_8', 'battery_10', 'battery_12', 'battery_24', 'battery_48', 'battery_72', 'battery_100', 'tes_ms6', 'tes_ms8', 'tes_ms10', 'tes_ms14']
 battery_techs=['battery_2', 'battery_4', 'battery_6', 'battery_8', 'battery_10', 'battery_12', 'battery_24', 'battery_48', 'battery_72', 'battery_100', 'battery_li']
 h2_techs = ['smr', 'smr-ccs', 'electrolyzer']
 prod_techs = h2_techs + ['dac']
@@ -939,18 +939,18 @@ def pre_vre_vs_stor(dfs, **kw):
     df_wind = df_gen[df_gen['technology'].str.startswith('wind')].copy()
     df_pv = df_gen[df_gen['technology'].str.contains('upv|distpv')].copy()
     df_bat = df_stor[df_stor['technology'].str.startswith('battery')].copy()
-    df_mstes = df_stor[df_stor['technology'].str.startswith('mstes')].copy()
+    df_tes = df_stor[df_stor['technology'].str.startswith('tes')].copy()
     df_wind = sum_over_cols(df_wind, group_cols=['year'], val_cols=['Generation (TWh)'])
     df_pv = sum_over_cols(df_pv, group_cols=['year'], val_cols=['Generation (TWh)'])
     df_bat = sum_over_cols(df_bat, group_cols=['year'], val_cols=['Storage (TWh)'])
-    df_mstes = sum_over_cols(df_mstes, group_cols=['year'], val_cols=['Storage (TWh)'])
+    df_tes = sum_over_cols(df_tes, group_cols=['year'], val_cols=['Storage (TWh)'])
     df_storall = sum_over_cols(df_stor, group_cols=['year'], val_cols=['Storage (TWh)'])
     df_wind = df_wind.rename(columns={'Generation (TWh)': 'Wind (TWh)'}).set_index('year')
     df_pv = df_pv.rename(columns={'Generation (TWh)': 'PV (TWh)'}).set_index('year')
     df_bat = df_bat.rename(columns={'Storage (TWh)': 'Battery (TWh)'}).set_index('year')
-    df_mstes = df_mstes.rename(columns={'Storage (TWh)': 'MSTES (TWh)'}).set_index('year')
+    df_tes = df_tes.rename(columns={'Storage (TWh)': 'TES (TWh)'}).set_index('year')
     df_storall = df_storall.set_index('year')
-    df = pd.concat([df_wind, df_pv, df_storall, df_bat, df_mstes], axis=1).fillna(0).reset_index().sort_values('year')
+    df = pd.concat([df_wind, df_pv, df_storall, df_bat, df_tes], axis=1).fillna(0).reset_index().sort_values('year')
     df['VRE (TWh)'] = df['Wind (TWh)'] + df['PV (TWh)']
     return df
 
@@ -1451,7 +1451,7 @@ results_meta = collections.OrderedDict((
         }
     ),
 
-    ('MSTES Duration (h)',
+    ('TES Duration (h)',
         {'sources': [
             {'name': 'duration', 'file': 'storage_duration_out', 'columns': ['tech', 'vintage', 'rb', 'year','Storage Duration (h)']},
             {'name': 'cap_energy', 'file': 'cap_energy_ivrt', 'columns': ['tech', 'vintage', 'rb', 'year','Energy Capacity (GWh)']},

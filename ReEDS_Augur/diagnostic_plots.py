@@ -57,7 +57,7 @@ def group_techs(dfin, dfs, technamecol='i'):
     dfout = dfin.copy()
     if technamecol in ['column', 'columns', 'wide', None, 0, False]:
         def renamer(x):
-            out = (x if x[0].startswith('battery') or x[0].startswith('mstes')
+            out = (x if x[0].startswith('battery') or x[0].startswith('tes')
                 else (x[0].strip('_01234567890*').lower(), x[1]))
             return out
         dfout.columns = dfout.columns.map(renamer)
@@ -68,7 +68,7 @@ def group_techs(dfin, dfs, technamecol='i'):
         )
     else:
         def renamer(x):
-            out = x if x.startswith('battery') or x[0].startswith('mstes') else x.strip('_01234567890*').lower()
+            out = x if x.startswith('battery') or x[0].startswith('tes') else x.strip('_01234567890*').lower()
             return out
         dfout[technamecol] = dfout[technamecol].map(renamer)
         dfout[technamecol] = (
@@ -105,7 +105,7 @@ def get_inputs(sw):
     tech_map = pd.read_csv(
         os.path.join(sw['reeds_path'],'postprocessing','bokehpivot','in','reeds2','tech_map.csv'))
     tech_map.raw = tech_map.raw.map(
-        lambda x: x if x.startswith('battery') or x[0].startswith('mstes') else x.strip('_01234567890*')).str.lower()
+        lambda x: x if x.startswith('battery') or x[0].startswith('tes') else x.strip('_01234567890*')).str.lower()
     tech_map = tech_map.drop_duplicates().set_index('raw').display.str.lower()
 
     existinghydrotechs = [
@@ -141,7 +141,7 @@ def get_inputs(sw):
     ).set_index('resource')
     resources['tech'] = (
         resources.i.map(lambda x: x.split('|')[0])
-        .map(lambda x: x if x.startswith('battery') or x[0].startswith('mstes') else x.strip('_01234567890*')))
+        .map(lambda x: x if x.startswith('battery') or x[0].startswith('tes') else x.strip('_01234567890*')))
 
     resources['rb'] = resources.r
 
@@ -512,7 +512,7 @@ def plot_pras_ICAP(sw, dfs):
     tech_style = dfs['tech_style']
     ## Aggregate by type
     cap.columns = cap.columns.map(
-        lambda x: x if x.startswith('battery') or x[0].startswith('mstes') else x.strip('_01234567890*')).str.lower()
+        lambda x: x if x.startswith('battery') or x[0].startswith('tes') else x.strip('_01234567890*')).str.lower()
     cap.columns = (
         cap.columns
         .map(lambda x: [i for i in tech_map.index if x.startswith(i)][0])
@@ -678,7 +678,7 @@ def plot_pras_ICAP_regional(sw, dfs, numdays=5):
     tech_style = dfs['tech_style']
     ## Aggregate by type
     def renamer(x):
-        out = (x if x[0].startswith('battery') or x[0].startswith('mstes')
+        out = (x if x[0].startswith('battery') or x[0].startswith('tes')
                else (x[0].strip('_01234567890*').lower(), *x[1:]))
         return out
     cap.columns = cap.columns.map(renamer)
@@ -761,7 +761,7 @@ def plot_pras_unitsize_distribution(sw, dfs):
     tech_style = pd.concat([tech_style,toadd])
     ## Aggregate by type
     cap.i = cap.i.map(
-        lambda x: x if x.startswith('battery') or x[0].startswith('mstes') else (x.strip('_01234567890*').lower()))
+        lambda x: x if x.startswith('battery') or x[0].startswith('tes') else (x.strip('_01234567890*').lower()))
     cap.i = (
         cap.i
         .map(lambda x: tech_map.get(x,x))
@@ -774,7 +774,7 @@ def plot_pras_unitsize_distribution(sw, dfs):
         dfs['vre_gen_usa'].columns.tolist()
         + ['hydro_exist']
         + [i for i in techs if i.startswith('battery')]
-        + [i for i in techs if i.startswith('mstes')]
+        + [i for i in techs if i.startswith('tes')]
         + [i for i in techs if (('canada' in i.lower()) or ('can-imports' in i.lower()))]
     )
     order = [i for i in tech_style.index if i in techs]
@@ -841,7 +841,7 @@ def plot_pras_unitnumber(sw, dfs, level='country'):
     tech_style = pd.concat([tech_style,toadd])
     ## Aggregate by type
     cap.i = cap.i.map(
-        lambda x: x if x.startswith('battery') or x[0].startswith('mstes') else (x.strip('_01234567890*').lower()))
+        lambda x: x if x.startswith('battery') or x[0].startswith('tes') else (x.strip('_01234567890*').lower()))
     cap.i = (
         cap.i
         .map(lambda x: tech_map.get(x,x))

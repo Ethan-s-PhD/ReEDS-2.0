@@ -37,10 +37,10 @@ geothermal,p
 Hydro,p
 lfill-gas,p
 MHKwave,p
-mstes_6,p
-mstes_8,p
-mstes_10,p
-mstes_14,p
+tes_ms6,p
+tes_ms8,p
+tes_ms10,p
+tes_ms14,p
 Nuclear,p
 Nuclear-SMR,p
 Ocean,p

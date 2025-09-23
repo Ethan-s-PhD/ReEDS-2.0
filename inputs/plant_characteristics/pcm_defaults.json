@@ -1273,7 +1273,7 @@
     "min_up_time": 7.0,
     "start_cost_per_MW": 5.3
   },
-  "mstes_6": {
+  "tes_ms6": {
     "avg_capacity_MW": 200.0,
     "forced_outage_rate": 2.0,
     "maintenance_rate": 0.55,
@@ -1286,7 +1286,7 @@
     "min_up_time": null,
     "start_cost_per_MW": null
   },
-  "mstes_8": {
+  "tes_ms8": {
     "avg_capacity_MW": 200.0,
     "forced_outage_rate": 2.0,
     "maintenance_rate": 0.55,
@@ -1299,7 +1299,7 @@
     "min_up_time": null,
     "start_cost_per_MW": null
   },
-  "mstes_10": {
+  "tes_ms10": {
     "avg_capacity_MW": 200.0,
     "forced_outage_rate": 2.0,
     "maintenance_rate": 0.55,
@@ -1312,7 +1312,7 @@
     "min_up_time": null,
     "start_cost_per_MW": null
   },
-  "mstes_14": {
+  "tes_ms14": {
     "avg_capacity_MW": 200.0,
     "forced_outage_rate": 2.0,
     "maintenance_rate": 0.55,

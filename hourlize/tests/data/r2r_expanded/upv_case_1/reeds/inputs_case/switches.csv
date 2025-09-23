@@ -252,7 +252,7 @@ GSw_distpv,1
 GSw_gopt,1
 GSw_hydED,1
 plantchar_battery,battery_ATB_2024_moderate
-plantchar_mstes,mstes_ATB_2024_moderate
+plantchar_tes,tes_ATB_2024_moderate
 plantchar_beccs,beccs_reference
 calc_csp_cc,0
 capcredit_hierarchy_level,transreg

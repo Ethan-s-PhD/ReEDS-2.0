@@ -60,10 +60,10 @@ battery_48,15
 battery_72,15
 battery_100,15
 battery_li,15
-mstes_6,30
-mstes_8,30
-mstes_10,30
-mstes_14,30
+tes_ms6,30
+tes_ms8,30
+tes_ms10,30
+tes_ms14,30
 evmc_storage_1*evmc_storage_10,1
 evmc_shape_1*evmc_shape_10,1
 electrolyzer,20

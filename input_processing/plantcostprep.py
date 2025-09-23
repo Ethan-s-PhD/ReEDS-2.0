@@ -220,8 +220,8 @@ continuous_battery = pd.read_csv(os.path.join(inputs_case,'plantchar_continuous_
 battery = deflate_func(battery, sw.plantchar_battery)
 continuous_battery = deflate_func(continuous_battery, sw.plantchar_battery)
 
-mstes = pd.read_csv(os.path.join(inputs_case,'plantchar_mstes.csv'))
-mstes = deflate_func(mstes, sw.plantchar_mstes)
+tes = pd.read_csv(os.path.join(inputs_case,'plantchar_tes.csv'))
+tes = deflate_func(tes, sw.plantchar_tes)
 
 evmc_storage = pd.read_csv(os.path.join(inputs_case,'plantchar_evmc_storage.csv'))
 evmc_storage = deflate_func(evmc_storage, 'evmc_storage_' + sw.evmcscen)
@@ -237,7 +237,7 @@ caes['i'] = 'caes'
 #    -- Concat all data --    #
 ###############################
 
-alldata = pd.concat([conv,upv_stack,wind_stack,geo_stack,csp_stack,battery, mstes,
+alldata = pd.concat([conv,upv_stack,wind_stack,geo_stack,csp_stack,battery, tes,
                      evmc_storage,evmc_shape,caes,beccs,ccsflex,h2ct],sort=False)
 
 if sw.upgradescen != 'default':

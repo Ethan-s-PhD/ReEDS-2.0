@@ -41,10 +41,10 @@ battery_48,0.006
 battery_72,0.006
 battery_100,0.006
 battery_li,0.006
-mstes_6,0.006
-mstes_8,0.006
-mstes_10,0.006
-mstes_14,0.006
+tes_ms6,0.006
+tes_ms8,0.006
+tes_ms10,0.006
+tes_ms14,0.006
 CAES,0.04
 ice,0.01
 hydD,0.02

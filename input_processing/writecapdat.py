@@ -76,8 +76,8 @@ TECH = {
         'coal-new', 'gas-cc', 'gas-ct', 'lfill-gas',
         'nuclear', 'o-g-s', 'battery_2', 'battery_4', 'battery_6',
         'battery_8', 'battery_10','battery_12','battery_24','battery_48',
-        'battery_72','battery_100', 'pumped-hydro', 'mstes_6', 'mstes_8',
-        'mstes_10', 'mstes_14'
+        'battery_72','battery_100', 'pumped-hydro', 'tes_ms6', 'tes_ms8',
+        'tes_ms10', 'tes_ms14'
     ],
     'prescribed_nonRSC': [
         'coal-new', 'lfill-gas', 'gas-ct', 'o-g-s', 'gas-cc', 
@@ -86,13 +86,13 @@ TECH = {
         'battery_2', 'battery_4', 'battery_6', 'battery_8', 
         'battery_10','battery_12','battery_24','battery_48',
         'battery_72','battery_100', 'pumped-hydro',
-        'mstes_6', 'mstes_8', 'mstes_10', 'mstes_14',
+        'tes_ms6', 'tes_ms8', 'tes_ms10', 'tes_ms14',
         'coaloldscr',
     ],
     'storage'  : ['battery_2', 'battery_4', 'battery_6', 'battery_8', 
                   'battery_10','battery_12','battery_24','battery_48',
                   'battery_72','battery_100', 'pumped-hydro',
-                  'mstes_6', 'mstes_8', 'mstes_10', 'mstes_14'
+                  'tes_ms6', 'tes_ms8', 'tes_ms10', 'tes_ms14'
     ],
     'rsc_all': ['upv','pvb','csp-ns'],
     'rsc_csp': ['csp-ns'],

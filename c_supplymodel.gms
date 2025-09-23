@@ -2866,11 +2866,11 @@ eq_storage_thermalres(i,v,r,h,t)
 *seas_cap_frac_delta is not applied here because we assume that the storage energy capacity is
 *constant across the year.
 eq_storage_duration(i,v,r,h,t)$[valgen(i,v,r,t)$valcap(i,v,r,t)
-                               $(battery(i) or mstes(i) or CSP_Storage(i) or pvb(i) or psh(i) or evmc_storage(i))
+                               $(battery(i) or tes(i) or CSP_Storage(i) or pvb(i) or psh(i) or evmc_storage(i))
                                $tmodel(t)]..
 
 * [plus] storage duration times storage capacity
-    storage_duration(i) * CAP(i,v,r,t) * (1$CSP_Storage(i) + 1$psh(i) + bcr(i)$(battery(i)$(not continuous_battery(i)) or pvb(i) or mstes(i)))
+    storage_duration(i) * CAP(i,v,r,t) * (1$CSP_Storage(i) + 1$psh(i) + bcr(i)$(battery(i)$(not continuous_battery(i)) or pvb(i) or tes(i)))
 
 * [plus] EVMC storage has time-varying energy capacity
     + evmc_storage_energy_hours(i,r,h,t) * CAP(i,v,r,t) * (bcr(i)$evmc_storage(i))

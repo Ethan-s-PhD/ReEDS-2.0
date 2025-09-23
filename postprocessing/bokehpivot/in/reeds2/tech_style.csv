@@ -46,11 +46,11 @@ battery_48,#9B214F
 battery_72,#9B334F
 battery_100,#9B454F
 battery_li,#9B574F
-mstes,#FF5000
-mstes_6,#FFC4A9
-mstes_8,#FF8953
-mstes_10,#FF8953
-mstes_14,#FF6924
+tes,#FF5000
+tes_ms6,#FFC4A9
+tes_ms8,#FF8953
+tes_ms10,#FF8953
+tes_ms14,#FF6924
 dr,#B9CBF5
 evmc_storage,#a55194
 evmc_shape,#ce6dbd

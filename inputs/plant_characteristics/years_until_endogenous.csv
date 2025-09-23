@@ -73,7 +73,7 @@ smr,0
 smr_ccs,0
 dac,3
 dac_gas,0
-mstes_6,0
-mstes_8,0
-mstes_10,0
-mstes_14,0
+tes_ms6,0
+tes_ms8,0
+tes_ms10,0
+tes_ms14,0

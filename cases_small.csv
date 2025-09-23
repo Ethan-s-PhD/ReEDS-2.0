@@ -19,8 +19,8 @@ GSw_LfillGas,0
 GSw_MinCF,0
 GSw_Mingen,0
 GSw_MinLoading,0
-GSw_MSTES,1
-plantchar_mstes,mstes_ATB_2024_advanced
+GSw_TES,1
+plantchar_tes,tes_ATB_2024_moderate
 GSw_Nuclear,1
 GSw_OfsWind,0
 GSw_OnsWind6to10,0
@@ -33,7 +33,7 @@ GSw_RGGI,0
 GSw_SkipAugurYear,2030
 GSw_StateCap,0
 GSw_StateRPS,0
-GSw_Storage,1
+GSw_Storage,3
 GSw_Upgrades,0
 ivt_suffix,small
 numhintage,1

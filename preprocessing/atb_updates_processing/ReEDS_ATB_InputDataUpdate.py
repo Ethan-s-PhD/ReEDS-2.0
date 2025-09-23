@@ -195,8 +195,8 @@ def batteries(input_dir, output_dir, df_atb, atb_year, atb_first_year, dollar_yr
 #end batteries
 
 
-def mstes(input_dir, output_dir, df_atb, atb_year, atb_first_year, dollar_yr_conv, crpyears, case):
-    """This function takes in necessary updates_setup arguments to create and write the mstes updates to csv.
+def tess(input_dir, output_dir, df_atb, atb_year, atb_first_year, dollar_yr_conv, crpyears, case):
+    """This function takes in necessary updates_setup arguments to create and write the tes updates to csv.
     
     Users should review all of the values set in this function to ensure the updates are completed as desired.
     
@@ -215,12 +215,12 @@ def mstes(input_dir, output_dir, df_atb, atb_year, atb_first_year, dollar_yr_con
             
     """
 
-    #read in mstes technology format types
-    mstes_format = pd.read_csv(os.path.join(input_dir,'mstes_plant_char_format.csv'))
+    #read in tes technology format types
+    tes_format = pd.read_csv(os.path.join(input_dir,'tes_plant_char_format.csv'))
 
     #read in historic data
     atb_prev_year = atb_year-1
-    hist_df = pd.read_csv(os.path.join(input_dir, 'mstes_ATB_%s_moderate.csv' % atb_prev_year))
+    hist_df = pd.read_csv(os.path.join(input_dir, 'tes_ATB_%s_moderate.csv' % atb_prev_year))
     
     #filter for data prior to atb first year for historic data
     hist_df = hist_df[hist_df['t']<atb_first_year]
@@ -229,7 +229,7 @@ def mstes(input_dir, output_dir, df_atb, atb_year, atb_first_year, dollar_yr_con
     hist_df[['capcost', 'fom', 'vom']] = hist_df[['capcost', 'fom', 'vom']] *dollar_yr_conv
 
     #subset the data for the appropriate filters
-    atb_subset_mstes = df_atb[(df_atb['Case'] == case) & (df_atb['CRPYears'] ==crpyears) & (df_atb['Technology'] == "Utility-Scale Molten Salt Thermal Storage")]
+    atb_subset_tes = df_atb[(df_atb['Case'] == case) & (df_atb['CRPYears'] ==crpyears) & (df_atb['Technology'] == "Utility-Scale Molten Salt Thermal Storage")]
     
     #array of column names to filter ATB data on
     filter_list = ['DisplayName', "Scenario"]
@@ -237,18 +237,18 @@ def mstes(input_dir, output_dir, df_atb, atb_year, atb_first_year, dollar_yr_con
     #dictionary of column names to map from ATB naming convention to ReEDS input naming convention
     col_dict = {'CAPEX':'capcost', 'Fixed O&M':'fom', 'variable':'t'}
 
-    #roundtrip efficiency and variable O&M are constant right now for all mstes techs and years, but may need to be changed in future.
-    mstes_rte= 0.44
-    mstes_vom = 0.0
+    #roundtrip efficiency and variable O&M are constant right now for all tes techs and years, but may need to be changed in future.
+    tes_rte= 0.44
+    tes_vom = 0.0
 
     # Loop through each of the necessary input files for ReEDS to extract corresponding data from input files and add to dataframe
-    for file in mstes_format['file'].drop_duplicates():
-        format_file = mstes_format[mstes_format['file']==file]
+    for file in tes_format['file'].drop_duplicates():
+        format_file = tes_format[tes_format['file']==file]
         df = pd.DataFrame()
 
         for i, row in format_file.iterrows():
 
-            atb_subset = atb_subset_mstes.copy()
+            atb_subset = atb_subset_tes.copy()
             for col in filter_list:
                 atb_subset = atb_subset[atb_subset[col]==row[col]]
             
@@ -259,8 +259,8 @@ def mstes(input_dir, output_dir, df_atb, atb_year, atb_first_year, dollar_yr_con
             atb_subset_pivot = atb_subset_pivot[col_dict.values()]
             atb_subset_pivot['i'] = row['i']
 
-            atb_subset_pivot['rte'] = mstes_rte
-            atb_subset_pivot['vom'] = mstes_vom
+            atb_subset_pivot['rte'] = tes_rte
+            atb_subset_pivot['vom'] = tes_vom
 
             df = pd.concat([df, atb_subset_pivot], sort=False, ignore_index=True)
         
@@ -269,9 +269,9 @@ def mstes(input_dir, output_dir, df_atb, atb_year, atb_first_year, dollar_yr_con
         df = pd.concat([hist_df, df], sort=False, ignore_index=True)
         
         #df.sort_values(by=["i", "t"], key=natsort_keygen())
-        #sorting the i and t columns while ignoring the string 'mstes_' in order to avoid need for natsort package
-        df['mstes'] = df['i'].str.split('_').str[1].astype(int)
-        df=df.sort_values(by=['mstes','t'],ascending=True).drop(columns='mstes')
+        #sorting the i and t columns while ignoring the string 'tes_' in order to avoid need for natsort package
+        df['tes'] = df['i'].str.split('_').str[1].astype(int)
+        df=df.sort_values(by=['tes','t'],ascending=True).drop(columns='tes')
 
         df['t'] = df['t'].astype('int64')
         
@@ -1039,7 +1039,7 @@ def run_updates():
     batteries(input_dir, output_dir, df_atb, atb_year, atb_first_year, dollar_yr_conv, crpyears, case)
     
     #run molten salt thermal storage updates
-    mstes(input_dir, output_dir, df_atb, atb_year, atb_first_year, dollar_yr_conv, crpyears, case)
+    tess(input_dir, output_dir, df_atb, atb_year, atb_first_year, dollar_yr_conv, crpyears, case)
 
     #run conventional generation updates 
     #retrieve historic and updated conventional generation dataframes for use with renewable fired combustion technologies
