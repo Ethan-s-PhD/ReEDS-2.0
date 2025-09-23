@@ -1,6 +1,6 @@
 ,nuclear_tes_ascsp
 timetype,seq
-endyear,2050
+endyear,2030
 GSw_Region,st/UT
 GSw_BatteryMandate,0
 GSw_Biopower,0
@@ -9,7 +9,7 @@ GSw_CoalIGCC,0
 GSw_CoalNew,0
 GSw_CofireNew,0
 GSw_CSAPR,0
-GSw_CSP,0
+GSw_CSP,1
 GSw_ForcePrescription,1
 GSw_GasCurve,2
 GSw_Geothermal,0
