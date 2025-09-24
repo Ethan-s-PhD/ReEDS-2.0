@@ -39,6 +39,10 @@ undisc_pbinary_1*undisc_pbinary_8,30
 undisc_pflash_1*undisc_pflash_8,30
 Nuclear,80
 Nuclear-SMR,80
+Nuclear-Stor1,80
+Nuclear-Stor2,80
+Nuclear-Stor3,80
+Nuclear-Stor4,80
 hydro,100
 hydD,100
 hydND,100

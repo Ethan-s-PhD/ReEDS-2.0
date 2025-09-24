@@ -35,6 +35,10 @@ geohydro_allkm_1*geohydro_allkm_10,30
 egs_nearfield_1*egs_nearfield_10,30
 Nuclear,80
 Nuclear-SMR,80
+Nuclear-Stor1,80
+Nuclear-Stor2,80
+Nuclear-Stor3,80
+Nuclear-Stor4,80
 hydro,100
 hydD,100
 hydND,100
