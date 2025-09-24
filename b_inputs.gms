@@ -732,7 +732,10 @@ if(Sw_NuclearSMR = 0,
 ) ;
 
 if(Sw_NuclearStor = 0,
-  ban("Nuclear-Stor") = yes ;
+  ban("Nuclear-Stor1") = yes ;
+  ban("Nuclear-Stor2") = yes ;
+  ban("Nuclear-Stor3") = yes ;
+  ban("Nuclear-Stor4") = yes ;
 ) ;
 
 if(Sw_OfsWind = 0,
@@ -893,7 +896,10 @@ bannew(i)$[sum{ctt_i_ii(i,'Nuclear'), i_ctt(i,'d') }] = YES ;
 bannew(i)$[sum{ctt_i_ii(i,'coal-CCS_mod'), i_ctt(i,'d') }] = YES ;
 bannew(i)$[sum{ctt_i_ii(i,'coal-CCS_max'), i_ctt(i,'d') }] = YES ;
 bannew(i)$[sum{ctt_i_ii(i,'Nuclear-SMR'), i_ctt(i,'d') }] = YES ;
-bannew(i)$[sum{ctt_i_ii(i,'Nuclear-Stor'), i_ctt(i,'d') }] = YES ;
+bannew(i)$[sum{ctt_i_ii(i,'Nuclear-Stor1'), i_ctt(i,'d') }] = YES ;
+bannew(i)$[sum{ctt_i_ii(i,'Nuclear-Stor2'), i_ctt(i,'d') }] = YES ;
+bannew(i)$[sum{ctt_i_ii(i,'Nuclear-Stor3'), i_ctt(i,'d') }] = YES ;
+bannew(i)$[sum{ctt_i_ii(i,'Nuclear-Stor4'), i_ctt(i,'d') }] = YES ;
 
 *ban and bannew all non-numeraire techs that are derived from ban numeraire techs
 ban(i)$sum{ii$ban(ii), ctt_i_ii(i,ii) } = YES ;

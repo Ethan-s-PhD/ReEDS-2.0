@@ -10,7 +10,7 @@ GSw_CoalNew,0
 GSw_CofireNew,0
 GSw_CSAPR,0
 GSw_CSP,0
-GSw_ForcePrescription,0
+GSw_ForcePrescription,1
 GSw_GasCurve,2
 GSw_Geothermal,0
 GSw_H2CT,0
@@ -22,6 +22,7 @@ GSw_MinLoading,0
 GSw_TES,1
 plantchar_tes,tes_ATB_2024_moderate
 GSw_Nuclear,1
+GSw_NuclearDemo,1
 GSw_OfsWind,0
 GSw_OnsWind6to10,0
 GSw_OpRes,0
