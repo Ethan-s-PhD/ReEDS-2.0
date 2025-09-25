@@ -352,7 +352,7 @@ def check_compatibility(sw):
     ilr_upv = scalars['ilr_utility'] * 100
 
     valid_storage_techs = ['battery', 'tes', 'caes']
-    for tech in sw['GSw_NuclearStor'].split('_'):
+    for tech in sw['GSw_NuclearStor_StorageTechs'].split('_'):
         if tech.split('-')[0] not in valid_storage_techs:
             raise ValueError(f"Invalid storage tech '{tech}' in GSw_NuclearStor. Allowed: {', '.join(valid_storage_techs)}")
 

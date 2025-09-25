@@ -1,4 +1,4 @@
-,ercot_small
+,nuclear_stor_small
 timetype,seq
 endyear,2030
 GSw_Region,st/UT
@@ -23,7 +23,7 @@ GSw_TES,1
 plantchar_tes,tes_ATB_2024_moderate
 GSw_Nuclear,1
 GSw_NuclearStor,1
-GSw_NuclearStor_Types,N/A,1_2_3
+GSw_NuclearStor_Types,1_2_3
 GSw_NuclearStor_StorageTechs,tes-ms6_tes-ms8_battery-8
 GSw_NuclearStor_BCR,0.45_0.45_0.45
 GSw_NuclearDemo,1

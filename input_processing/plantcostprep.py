@@ -98,7 +98,7 @@ upv_stack = pd.concat(
 ###########################
 
 conv_in = []
-conv_techs = ['gas', 'gas_ccs', 'coal', 'coal_ccs', 'biopower', 'nuclear', 'nuclear_smr', 'nuclear_stor', 'other']
+conv_techs = ['gas', 'gas_ccs', 'coal', 'coal_ccs', 'biopower', 'nuclear', 'nuclear_smr', 'other']
 for ct in conv_techs:
     print(f"Loading plantchar_{ct}")
     df = pd.read_csv(os.path.join(inputs_case,f'plantchar_{ct}.csv'))
@@ -242,6 +242,13 @@ alldata = pd.concat([conv,upv_stack,wind_stack,geo_stack,csp_stack,battery, tes,
 
 if sw.upgradescen != 'default':
     alldata = pd.concat([alldata,upgrade])
+
+# nan_rows = alldata[alldata.isna().any(axis=1)]
+# if not nan_rows.empty:
+#     print("NaNs found in alldata:")
+#     for idx, row in nan_rows.iterrows():
+#         nan_cols = row.index[row.isna()]
+#         print(f"Index {idx}: {row}")
 
 alldata['t'] = alldata['t'].astype(int)
 
@@ -429,10 +436,10 @@ pvb = pd.concat(pvb, axis=1)
 #####################################
 # Get nuclear+storage designs
 nuclear_bcr = pd.read_csv(
-    os.path.join(inputs_case, 'nuclear_bcr.csv'),
+    os.path.join(inputs_case, 'nuclear_stor_bcr.csv'),
     header=0, names=['nuclear_type','bcr'], index_col='nuclear_type').squeeze(1)
 nuclear_storagetech = pd.read_csv(
-    os.path.join(inputs_case, 'nuclear_storagetechs.csv'),
+    os.path.join(inputs_case, 'nuclear_stor_storagetechs.csv'),
     header=0, names=['nuclear_type','storage_type'], index_col='nuclear_type').squeeze(1)
 # Get cost-sharing assumptions
 nuclearstoragevalues = pd.read_csv(os.path.join(inputs_case,'plantchar_nuclear_stor.csv'), index_col='parameter')

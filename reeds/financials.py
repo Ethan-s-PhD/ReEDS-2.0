@@ -325,7 +325,7 @@ def append_pvb_parameters(dfin, tech_to_copy='battery_4', column_scaler=None, pv
 
     return dfout
 
-def append_nuclear_parameters(dfin, tech_to_copy='tes_ms6', column_scaler=None, nuclear_storage_types=[1, 2, 3, 4]):
+def append_nuclear_stor_parameters(dfin, tech_to_copy='tes_ms6', column_scaler=None, nuclear_storage_types=[1, 2, 3, 4]):
     """
     Copies the parameters for tech_to_copy (typically nuclear, except for the degradation where we copy from the storage) 
     for storage in nuclear+storage systems and returns a copy of the input

@@ -83,6 +83,7 @@ def calc_financial_inputs(inputs_case):
         tech_to_copy='battery_{}'.format(scen_settings.sw['GSw_PVB_Dur']))
     
     for storage_tech in scen_settings.sw['GSw_NuclearStor_StorageTechs'].split('_'):
+        storage_tech = storage_tech.replace('-', '_')
         annual_degrade = reeds.financials.append_nuclear_stor_parameters(
             dfin=annual_degrade, 
             tech_to_copy=storage_tech)
