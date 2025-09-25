@@ -388,7 +388,7 @@ reqt_quant('state_rps',RPSCat,r,'ann',t)$tmodel_new(t) =
 
       + ( sum{(i,v)$[valgen(i,v,r,t)$(not storage_standalone(i))], GEN.l(i,v,r,h,t)
           - (distloss * GEN.l(i,v,r,h,t))$(distpv(i))
-          - (STORAGE_IN_GRID.l(i,v,r,h,t) * storage_eff_pvb_g(i,t))$[storage_hybrid(i)$(not csp(i))$Sw_HybridPlant] }
+          - (STORAGE_IN_GRID.l(i,v,r,h,t) * storage_eff_pvb_g(i,t))$[storage_hybrid(i)$(not csp(i))$(not nuclear_stor(i))$Sw_HybridPlant] }
           - can_exports_h(r,h,t)$[(Sw_Canada=1)$sameas(RPSCat,"CES")]
         )$(RecStyle(st,RPSCat)=2)
     )} ;

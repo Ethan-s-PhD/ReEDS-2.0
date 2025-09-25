@@ -1134,6 +1134,12 @@ $offdelim
 $onlisting
 / ;
 
+* Sanity check: each nuclear_stor must map to exactly one storage tech
+loop(i$nuclear_stor(i),
+  abort$(sum(i_stor$ nuclear_stor_stortech(i,i_stor),1) <> 1)
+    "nuclear_stor_stortech mapping must have exactly one storage tech for composite tech", i ;
+);
+
 * If storage tech used by nuclear+storage config is TES, then add it to tes and thermal_storage sets
 set nuclear_stor_with_tes(i) "hybrid nuclear+storage technologies whose storage tech is TES" ;
 nuclear_stor_with_tes(i)$[nuclear_stor(i)
@@ -5120,21 +5126,21 @@ parameter cost_cap_fin_mult_pvb_b(i,r,t)            "capital cost multiplier for
           cost_cap_fin_mult_pvb_b_no_credits(i,r,t) "capital cost multiplier for the battery portion of hybrid PV+Battery, excluding ITC/PTC/Depreciation"
 ;
 
-$ontext
+
 * This is commented out until I figure out how the ITC and other credits apply to nuclear+storage
 * --- Hybrid Nuclear+Storage ---
 * Hybrid Nuclear+Storage: Nuclear portion
-parameter cost_cap_fin_mult_nuclear_stor_n(i,r,t)            "capital cost multiplier for the nuclear portion of hybrid Nuclear+Storage"
-          cost_cap_fin_mult_nuclear_stor_n_noITC(i,r,t)      "capital cost multiplier for the nuclear portion of hybrid Nuclear+Storage, excluding ITC"
-          cost_cap_fin_mult_nuclear_stor_n_no_credits(i,r,t) "capital cost multiplier for the nuclear portion of hybrid Nuclear+Storage, excluding ITC/PTC/Depreciation"
+parameter cost_cap_fin_mult_nuclear_stor_p(i,r,t)            "capital cost multiplier for the nuclear portion of hybrid Nuclear+Storage"
+          cost_cap_fin_mult_nuclear_stor_p_noITC(i,r,t)      "capital cost multiplier for the nuclear portion of hybrid Nuclear+Storage, excluding ITC"
+          cost_cap_fin_mult_nuclear_stor_p_no_credits(i,r,t) "capital cost multiplier for the nuclear portion of hybrid Nuclear+Storage, excluding ITC/PTC/Depreciation"
 ;
 
 * Hybrid PV+Battery: Battery portion
-parameter cost_cap_fin_mult_nuclear_stor_b(i,r,t)            "capital cost multiplier for the storage portion of hybrid Nuclear+Storage"
-          cost_cap_fin_mult_nuclear_stor_b_noITC(i,r,t)      "capital cost multiplier for the storage portion of hybrid Nuclear+Storage, excluding ITC"
-          cost_cap_fin_mult_nuclear_stor_b_no_credits(i,r,t) "capital cost multiplier for the storage portion of hybrid Nuclear+Storage, excluding ITC/PTC/Depreciation"
+parameter cost_cap_fin_mult_nuclear_stor_s(i,r,t)            "capital cost multiplier for the storage portion of hybrid Nuclear+Storage"
+          cost_cap_fin_mult_nuclear_stor_s_noITC(i,r,t)      "capital cost multiplier for the storage portion of hybrid Nuclear+Storage, excluding ITC"
+          cost_cap_fin_mult_nuclear_stor_s_no_credits(i,r,t) "capital cost multiplier for the storage portion of hybrid Nuclear+Storage, excluding ITC/PTC/Depreciation"
 ;
-$offtext
+
 
 * --- Nuclear Ban ---
 *Assign increased cost multipliers to regions with state nuclear bans

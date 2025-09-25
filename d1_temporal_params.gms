@@ -368,6 +368,7 @@ $onlisting
 
 * Infer some forced outage rates from parent techs
 outage_forced_h(i,r,h)$pvb(i) = outage_forced_h("battery_%GSw_pvb_dur%",r,h) ;
+outage_forced_h(i,r,h)$nuclear_stor(i) = outage_forced_h("nuclear",r,h) ;
 outage_forced_h(i,r,h)$geo(i) = outage_forced_h("geothermal",r,h) ;
 
 outage_forced_h(i,r,h)$[i_water_cooling(i)$Sw_WaterMain] =
@@ -388,6 +389,7 @@ $onlisting
 
 * Infer some scheduled outage rates from parent techs
 outage_scheduled_h(i,h)$pvb(i) = outage_scheduled_h("battery_%GSw_pvb_dur%",h) ;
+outage_scheduled_h(i,h)$nuclear_stor(i) = outage_scheduled_h("nuclear",h) ;
 outage_scheduled_h(i,h)$geo(i) = outage_scheduled_h("geothermal",h) ;
 
 outage_scheduled_h(i,h)$[i_water_cooling(i)$Sw_WaterMain] =

@@ -30,7 +30,7 @@ GSw_NuclearDemo,1
 GSw_OfsWind,0
 GSw_OnsWind6to10,0
 GSw_OpRes,0
-GSw_PVB,0
+GSw_PVB,1
 GSw_Refurb,0
 GSw_PRM_CapCredit,0
 GSw_Retire,0

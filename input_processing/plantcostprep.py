@@ -458,7 +458,7 @@ for i in sw['GSw_NuclearStor_Types'].split('_'):
         energyconversion_cost_USDperWac = heatpump_cost_USDperWac
     elif stor_tech.startswith('caes'):
         storage_USDperWac = caes.loc[caes.i==stor_tech].set_index('t').capcost
-        energyconversion_cost_USDperWac = 0  # CAES is directly coupled
+        energyconversion_cost_USDperWac = 0  # CAES is coupled using the same equipment as it is to the grid
     nuclear_storage_cost = nuclear_default + nuclear_bcr * (storage_USDperWac - energyconversion_cost_USDperWac)
     nuclearstorage['nuclear_stor{}'.format(i)] = nuclear_storage_cost / nuclear_default
 nuclearstorage = pd.concat(nuclearstorage, axis=1)
