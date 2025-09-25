@@ -1134,6 +1134,14 @@ $offdelim
 $onlisting
 / ;
 
+* If storage tech used by nuclear+storage config is TES, then add it to tes and thermal_storage sets
+set nuclear_stor_with_tes(i) "hybrid nuclear+storage technologies whose storage tech is TES" ;
+nuclear_stor_with_tes(i)$[nuclear_stor(i)
+                          $sum{i_stor$[nuclear_stor_stortech(i,i_stor)$tes(i_stor)],1}] = yes ;
+
+tes(i)$nuclear_stor_with_tes(i) = yes ;
+thermal_storage(i)$nuclear_stor_with_tes(i) = yes ;
+
 *add non-numeraire CSPs in index i of already defined set tg_i(tg,i)
 tg_i("csp",i)$[(csp1(i) or csp2(i) or csp3(i) or csp4(i))$Sw_WaterMain] = yes ;
 
