@@ -148,6 +148,7 @@ def main(reeds_path, inputs_case, agglevel, regions):
     retscen = sw.retscen
     GSw_WaterMain = int(sw.GSw_WaterMain)
     GSw_PVB = int(sw.GSw_PVB)
+    GSw_NuclearStor = int(sw.GSw_NuclearStor)
     startyear = int(sw.startyear)
 
     scalars = reeds.io.get_scalars(inputs_case)
@@ -234,6 +235,15 @@ def main(reeds_path, inputs_case, agglevel, regions):
     else:
         gdb_use['tech'] = gdb_use['tech'].replace('pvb_battery','pvb')
         gdb_use['tech'] = gdb_use['tech'].replace('pvb_pv','pvb')
+
+    # If nuclear_storage is turned off, consider all nuclear_storage as nuclear and tes_ms6 for existing and prescribed builds 
+    # If nuclear_storage is turned on, consider all nuclear_storage as 'nuclear_stor'
+    if GSw_NuclearStor == 0:
+        gdb_use['tech'] = gdb_use['tech'].replace('nuclear_stor_storage','tes_ms6')
+        gdb_use['tech'] = gdb_use['tech'].replace('nuclear_stor_source','nuclear')
+    else:
+        gdb_use['tech'] = gdb_use['tech'].replace('nuclear_stor_storage','nuclear_stor')
+        gdb_use['tech'] = gdb_use['tech'].replace('nuclear_stor_source','nuclear_stor')
 
 
     # Consider all DUPV as UPV for existing and prescribed builds.

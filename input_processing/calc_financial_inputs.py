@@ -81,6 +81,11 @@ def calc_financial_inputs(inputs_case):
     annual_degrade = reeds.financials.append_pvb_parameters(
         dfin=annual_degrade, 
         tech_to_copy='battery_{}'.format(scen_settings.sw['GSw_PVB_Dur']))
+    
+    for storage_tech in scen_settings.sw['GSw_NuclearStor_StorageTechs'].split('_'):
+        annual_degrade = reeds.financials.append_nuclear_stor_parameters(
+            dfin=annual_degrade, 
+            tech_to_copy=storage_tech)
 
     years, modeled_years, year_map = reeds.financials.ingest_years(
         inputs_case, sw['sys_eval_years'], sw['endyear'])

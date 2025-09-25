@@ -1,0 +1,27 @@
+
+--- Job test.gms Start 09/25/25 01:48:00 48.6.0 f19e462d WEX-WEI x86 64bit/MS Windows
+--- Applying:
+    C:\GAMS\48\gmsprmNT.txt
+--- GAMS Parameters defined
+    Input C:\Users\ethan\code\research\ReEDS-2.0\test.gms
+    PageSize 0
+    ScrDir C:\Users\ethan\code\research\ReEDS-2.0\225a\
+    SysDir C:\GAMS\48\
+    LogOption 3
+    ErrMsg 1
+    ErrorLog 99
+    IDE 1
+    LstTitleLeftAligned 1
+Licensee: Ethan Gallup, Single User License              G250423|0002AO-WIN
+          University of Utah,                                       DC17182
+          C:\Users\ethan\OneDrive\Documents\GAMS\gamslice.txt
+          ethan.gallup@utah.edu                                            
+          The maintenance period of the license will expire on May 18, 2026
+Processor information: 1 socket(s), 10 core(s), and 12 thread(s) available
+GAMS 48.6.0   Copyright (C) 1987-2025 GAMS Development. All rights reserved
+--- Starting compilation
+--- test.gms(127) 3 Mb
+--- Starting execution: elapsed 0:00:00.014
+--- test.gms(127) 4 Mb
+*** Status: Normal completion
+--- Job test.gms Stop 09/25/25 01:48:00 elapsed 0:00:00.016
