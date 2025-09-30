@@ -809,16 +809,16 @@ $endif.pvb12
 
 * Ban NuclearStor_Types that aren't included in the model
 $ifthen.nuclear_stor1234 %GSw_NuclearStor_Types% == '1_2_3'
-    ban(i)$i_subsets(i,'nuclear_stor4') = yes ;
+    ban(i)$i_subsets(i,'Nuclear-Stor4') = yes ;
 $endif.nuclear_stor1234
 $ifthen.nuclear_stor123 %GSw_NuclearStor_Types% == '1_2'
-    ban(i)$i_subsets(i,'nuclear_stor3') = yes ;
-    ban(i)$i_subsets(i,'nuclear_stor4') = yes ;
+    ban(i)$i_subsets(i,'Nuclear-Stor3') = yes ;
+    ban(i)$i_subsets(i,'Nuclear-Stor4') = yes ;
 $endif.nuclear_stor123
 $ifthen.nuclear_stor12 %GSw_NuclearStor_Types% == '1'
-    ban(i)$i_subsets(i,'nuclear_stor2') = yes ;
-    ban(i)$i_subsets(i,'nuclear_stor3') = yes ;
-    ban(i)$i_subsets(i,'nuclear_stor4') = yes ;
+    ban(i)$i_subsets(i,'Nuclear-Stor2') = yes ;
+    ban(i)$i_subsets(i,'Nuclear-Stor3') = yes ;
+    ban(i)$i_subsets(i,'Nuclear-Stor4') = yes ;
 $endif.nuclear_stor12
 
 *** Restrict valcap for storage techs based on Sw_Storage switch
@@ -1048,10 +1048,11 @@ lfill(i)$(not ban(i))               = yes$i_subsets(i,'lfill') ;
 tes(i)$(not ban(i))                 = yes$i_subsets(i,'tes') ;
 nondispatch(i)$(not ban(i))         = yes$i_subsets(i,'nondispatch') ;
 nuclear(i)$(not ban(i))             = yes$i_subsets(i,'nuclear') ;
-nuclear_stor1(i)$(not ban(i))       = yes$i_subsets(i,'nuclear_stor1') ;
-nuclear_stor2(i)$(not ban(i))       = yes$i_subsets(i,'nuclear_stor2') ;
-nuclear_stor3(i)$(not ban(i))       = yes$i_subsets(i,'nuclear_stor3') ;
-nuclear_stor4(i)$(not ban(i))       = yes$i_subsets(i,'nuclear_stor4') ;
+nuclear_stor(i)$(not ban(i))        = yes$i_subsets(i,'Nuclear-Stor') ;
+nuclear_stor1(i)$(not ban(i))       = yes$i_subsets(i,'Nuclear-Stor1') ;
+nuclear_stor2(i)$(not ban(i))       = yes$i_subsets(i,'Nuclear-Stor2') ;
+nuclear_stor3(i)$(not ban(i))       = yes$i_subsets(i,'Nuclear-Stor3') ;
+nuclear_stor4(i)$(not ban(i))       = yes$i_subsets(i,'Nuclear-Stor4') ;
 ofswind(i)$(not ban(i))             = yes$i_subsets(i,'ofswind') ;
 ogs(i)$(not ban(i))                 = yes$i_subsets(i,'ogs') ;
 onswind(i)$(not ban(i))             = yes$i_subsets(i,'onswind') ;
@@ -1129,7 +1130,7 @@ set nuclear_stor_stortech(i,i_stor) "storage tech used by each nuclear+storage c
 / 
 $offlisting
 $ondelim
-$include inputs_case%ds%nuclear_stor_stortech.csv
+$include inputs_case%ds%nuclear_stor_storagetechs.csv
 $offdelim
 $onlisting
 / ;
@@ -2563,6 +2564,7 @@ valcap(i,newv,r,t)
     $sum{(tt,pcat)$[ivt(i,newv,tt)$prescriptivelink(pcat,i)],
          noncumulative_prescriptions(pcat,r,tt) }]
     = yes ;
+
 
 *NEW capacity only valid in historical years if and only if it has required prescriptions
 *logic here is that we don't want to populate the constraint with CAP <= 0 and instead
@@ -4450,7 +4452,7 @@ cost_vom_nuclear_stor_p(i,v,r,t)$nuclear_stor(i) = cost_vom("nuclear",v,r,t) ;
 
 * Assign hybrid nuclear+storage storage to have the same value as the storage technology in stortech_nuclear_stor_config
 parameter cost_vom_nuclear_stor_s(i,v,r,t) "--2004$/MWh-- variable OM for storage portion of hybrid nuclear+storage" ;
-cost_vom_nuclear_stor_s(i,t)$nuclear_stor(i,v,r,t) = sum{i_stor$ nuclear_stor_stortech(i,i_stor), cost_vom(i_stor,v,r,t)};
+cost_vom_nuclear_stor_s(i,v,r,t)$nuclear_stor(i) = sum{i_stor$ nuclear_stor_stortech(i,i_stor), cost_vom(i_stor,v,r,t)};
 
 *upgrade vom costs for initial classes are the vom costs for that tech
 *plus the delta between upgrade_to and upgrade_from for the initial year
@@ -5735,10 +5737,7 @@ parameter storage_eff_nuclear_stor_p(i,t) "--fraction-- efficiency of hybrid nuc
           storage_eff_nuclear_stor_g(i,t) "--fraction-- efficiency of hybrid nuclear+storage when charging from the grid" ;
 
 *when charging from nuclear the nuclear_stor system will have a higher efficiency if the storage tech is tes
-storage_eff_nuclear_stor_p(i,t)$nuclear_stor(i) =
-   ( sum{i_stor$[nuclear_stor_stortech(i,i_stor)$battery(i_stor)], storage_eff(i_stor,t)}  /*Use battery efficiency if battery storage*/
-     + sum{i_stor$[nuclear_stor_stortech(i,i_stor)$tes(i_stor)], 1}    /* Use 1.0 efficiency if TES storage*/
-   );
+storage_eff_nuclear_stor_p(i,t)$nuclear_stor(i) = sum{i_stor$[nuclear_stor_stortech(i,i_stor)$battery(i_stor)], storage_eff(i_stor,t)} + sum{i_stor$[nuclear_stor_stortech(i,i_stor)$tes(i_stor)], 1};
 *when charging from the grid the efficiency will be the same as standalone storage
 storage_eff_nuclear_stor_g(i,t)$nuclear_stor(i) = sum{i_stor$ nuclear_stor_stortech(i,i_stor), storage_eff(i_stor,t)};
 

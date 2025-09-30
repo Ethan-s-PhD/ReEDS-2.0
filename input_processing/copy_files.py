@@ -1316,13 +1316,13 @@ def write_miscellaneous_files(
     ).to_csv(os.path.join(inputs_case, 'pvb_bir.csv'), index=False)
 
     pd.DataFrame(
-        {'*nuclear_stor_type': [f'nuclear_stor{i}' for i in sw['GSw_NuclearStor_Types'].split('_')],
+        {'*nuclear-stor_type': [f'nuclear-stor{i}' for i in sw['GSw_NuclearStor_Types'].split('_')],
         'storagetechs': [c.replace('-', '_') for c in sw['GSw_NuclearStor_BCR'].split('_')
                 ][0:len(sw['GSw_NuclearStor_Types'].split('_'))]}
     ).to_csv(os.path.join(inputs_case, 'nuclear_stor_bcr.csv'), index=False)
     
     pd.DataFrame(
-        {'*nuclear_stor_type': [f'nuclear_stor{i}' for i in sw['GSw_NuclearStor_Types'].split('_')],
+        {'*nuclear-stor_type': [f'nuclear-stor{i}' for i in sw['GSw_NuclearStor_Types'].split('_')],
         'storagetechs': [c.replace('-', '_') for c in sw['GSw_NuclearStor_StorageTechs'].split('_')
                 ][0:len(sw['GSw_NuclearStor_Types'].split('_'))]}
     ).to_csv(os.path.join(inputs_case, 'nuclear_stor_storagetechs.csv'), index=False)

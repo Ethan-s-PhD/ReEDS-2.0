@@ -242,8 +242,8 @@ def main(reeds_path, inputs_case, agglevel, regions):
         gdb_use['tech'] = gdb_use['tech'].replace('nuclear_stor_storage','tes_ms6')
         gdb_use['tech'] = gdb_use['tech'].replace('nuclear_stor_source','nuclear')
     else:
-        gdb_use['tech'] = gdb_use['tech'].replace('nuclear_stor_storage','nuclear_stor')
-        gdb_use['tech'] = gdb_use['tech'].replace('nuclear_stor_source','nuclear_stor')
+        gdb_use['tech'] = gdb_use['tech'].replace('nuclear_stor_storage','nuclear-stor')
+        gdb_use['tech'] = gdb_use['tech'].replace('nuclear_stor_source','nuclear-stor')
 
 
     # Consider all DUPV as UPV for existing and prescribed builds.

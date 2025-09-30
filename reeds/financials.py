@@ -209,8 +209,7 @@ def import_data(
     '''
 
     df = pd.read_csv(os.path.join(scen_settings.inputs_case, f'{file_root}.csv'))
-
-    # Expand tech groups, if there is an 'i' column and the argument is True
+   # Expand tech groups, if there is an 'i' column and the argument is True
     if 'i' in df.columns and expand_tech_groups is True:
         for tech_group in scen_settings.tech_groups.keys():
             if tech_group in list(df['i']):
@@ -223,7 +222,6 @@ def import_data(
                     df_expanded_single = df_subset.copy()
                     df_expanded_single['i'] = tech
                     df_list = df_list + [df_expanded_single]
-
                 df = pd.concat([df] + df_list, ignore_index=True)
 
     # Check if a currency_file_root file exists - it should exist if there are
@@ -274,7 +272,21 @@ def import_data(
     if check_for_dups is True:
         df_index_check = df[indices].copy()
         if len(df_index_check) != len(df_index_check.drop_duplicates()):
-            print('Error: Duplicate entries for', file_root, file_suffix, 'on indices', indices)
+            duplicates = df[df_index_check.duplicated(keep=False)]
+            duplicate_counts = duplicates.groupby(['i', 'country', 't']).size().reset_index(name='duplicate_count')
+            print(f'Error: {max(duplicate_counts["duplicate_count"])} Duplicates of {len(duplicates)} entries for', file_root, file_suffix, "on filepath:")
+            print(os.path.join(scen_settings.inputs_case, f'{file_root}.csv'))
+            print('Duplicates for the following indices:')
+            for index in indices:
+                print(f'{index}: {duplicates.loc[:, index].unique()}')
+            df_index_check.to_csv(os.path.join(scen_settings.inputs_case, f'duplicates_{file_root}_{file_suffix}.csv'), index=False)
+            
+            if 'i' in df.columns and expand_tech_groups is True:
+                print('Tech groups expanded in this dataset were:')
+                for tech_group in scen_settings.tech_groups.keys():
+                    print(f"{tech_group}: {scen_settings.tech_groups[tech_group]}")
+                    if tech_group in list(df['i']):
+                        print(scen_settings.tech_groups[tech_group])
             sys.exit()
 
     return df
@@ -351,7 +363,7 @@ def append_nuclear_stor_parameters(dfin, tech_to_copy='tes_ms6', column_scaler=N
     append_nuclear_params = (
         pd.concat(
             {
-                'nuclear_stor_{}'.format(nuclear_stor_type): copy_params
+                'nuclear-stor{}'.format(nuclear_stor_type): copy_params
                 for nuclear_stor_type in nuclear_storage_types
             }
         )
@@ -362,8 +374,14 @@ def append_nuclear_stor_parameters(dfin, tech_to_copy='tes_ms6', column_scaler=N
     if column_scaler is not None:
         for col, scaler in column_scaler.items():
             append_nuclear_params[col] = (append_nuclear_params[col] * scaler).round(5)
+    ### Check for duplicates
+    if len(append_nuclear_params) != len(append_nuclear_params.drop_duplicates()):
+        raise Exception('Duplicate entries found when appending nuclear+storage parameters. Please check the input dataframe.')
     ### Append to the original dataframe and return
     dfout = pd.concat([dfin, append_nuclear_params], ignore_index=True)
+    ### Check to see if we created duplicates
+    if len(dfout) != len(dfout.drop_duplicates()):
+        raise Exception('Duplicate entries found when appending nuclear+storage parameters. This may result from append_nuclear_storage_parameters being called more than once for the same file or from appending to a file that already contains the technologies')
 
     return dfout
 
