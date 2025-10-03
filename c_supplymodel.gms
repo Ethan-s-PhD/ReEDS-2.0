@@ -1180,6 +1180,8 @@ eq_mingen_fixed(i,v,r,h,t)
 
     GEN(i,v,r,h,t)$(not nuclear_stor(i))
 
+    + GEN_PLANT(i,v,r,h,t)$nuclear_stor(i)
+
     =g=
 
     mingen_fixed(i) * avail(i,r,h) *  CAP(i,v,r,t)
@@ -3094,9 +3096,6 @@ eq_hybrid_plant_energy_limit(i,v,r,h,t)$[storage_hybrid(i)$(not csp(i))$tmodel(t
 
     =g=
 
-*[plus] charging from hybrid plant
-    + STORAGE_IN_PLANT(i,v,r,h,t)$dayhours(h)
-
 *[plus] generation from hybrid plant
     + GEN_PLANT(i,v,r,h,t)
 ;
@@ -3114,6 +3113,9 @@ eq_plant_capacity_limit(i,v,r,h,t)$[storage_hybrid(i)$(not csp(i))$tmodel(t)$val
 
 * [plus] Output from plant
     + GEN_PLANT(i,v,r,h,t)
+
+* [minus] energy to storage from hybrid plant
+    - STORAGE_IN_PLANT(i,v,r,h,t)
 
 * [plus] Output form storage
     + GEN_STORAGE(i,v,r,h,t)

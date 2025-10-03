@@ -2514,6 +2514,10 @@ valcap(i,v,r,t) = no ;
 *existing plants are enabled if not in ban(i)
 valcap(i,v,r,t)$[m_capacity_exog(i,v,r,t)$(not ban(i))$tmodel_new(t)] = yes ;
 
+* scalar nuclear_valcap_flag /0/ ;
+* nuclear_valcap_flag = sign(sum((v,r,t)$valcap('nuclear-stor1','new1',r,'2050'), 1));
+* put_utility 'log' / 'nuclear valcap: ' nuclear_valcap_flag:0:0 ;
+
 * if a plant is still available by upgrade year
 * and it is able to be upgraded - keep that plant in the valcap set
 valcap(i,v,r,t)$[sum{tt$[tt.val = Sw_UpgradeYear], m_capacity_exog(i,v,r,tt) }
@@ -2547,6 +2551,10 @@ valcap(i,newv,r,t)
 
 *enable capacity if there is a required prescription in that region
 *first for non-rsc techs
+* valcap(i,newv,r,t)$[(not rsc_i(i))
+*                     $(sum{pcat$prescriptivelink(pcat,i), m_required_prescriptions(pcat,r,t) })
+*                     $sum{tt$(yeart(tt)<=yeart(t)), ivt(i,newv,tt) }$(not ban(i))] = yes ;
+
 valcap(i,newv,r,t)$[(not rsc_i(i))
                     $(sum{pcat$prescriptivelink(pcat,i), m_required_prescriptions(pcat,r,t) })
                     $sum{tt$(yeart(tt)<=yeart(t)), ivt(i,newv,tt) }$(not ban(i))] = yes ;
@@ -4448,12 +4456,12 @@ cost_vom_hybrid_storage(i,v,r,t)$[storage_hybrid(i)$(not csp(i))] = cost_vom("ba
 
 * Assign hybrid nuclear+storage plant to have the same value as nuclear
 parameter cost_vom_nuclear_stor_p(i,v,r,t) "--2004$/MWh-- variable OM for nuclear portion of hybrid nuclear+storage" ;
-cost_vom_nuclear_stor_p(i,v,r,t)$nuclear_stor(i) = cost_vom("nuclear",v,r,t) ;
+cost_vom_nuclear_stor_p(i,v,r,t)$nuclear_stor(i) = plant_char('nuclear',v,t,'vom');
 
 * Assign hybrid nuclear+storage storage to have the same value as the storage technology in stortech_nuclear_stor_config
 parameter cost_vom_nuclear_stor_s(i,v,r,t) "--2004$/MWh-- variable OM for storage portion of hybrid nuclear+storage" ;
-cost_vom_nuclear_stor_s(i,v,r,t)$nuclear_stor(i) = sum{i_stor$ nuclear_stor_stortech(i,i_stor), cost_vom(i_stor,v,r,t)};
-
+cost_vom_nuclear_stor_s(i,v,r,t)$nuclear_stor(i) = sum{i_stor$nuclear_stor_stortech(i,i_stor), plant_char(i_stor,v,t,'vom')} ;
+cost_vom_nuclear_stor_s(i,v,r,t)$[nuclear_stor(i)$(not cost_vom(i,v,r,t))] = storage_vom_min ;
 *upgrade vom costs for initial classes are the vom costs for that tech
 *plus the delta between upgrade_to and upgrade_from for the initial year
 cost_vom(i,initv,r,t)$[upgrade(i)$Sw_Upgrades$valcap(i,initv,r,t)] =
@@ -4517,11 +4525,11 @@ cost_fom(i,v,r,t)$[valcap(i,v,r,t)$pvb(i)] = cost_fom_pvb_p(i,v,r,t) + bcr(i) * 
 
 * Assign hybrid nuclear+storage plant to have the same value as nuclear
 parameter cost_fom_nuclear_stor_p(i,v,r,t) "--2004$/MW-- fixed OM for nuclear portion of hybrid nuclear+storage" ;
-cost_fom_nuclear_stor_p(i,v,r,t)$nuclear_stor(i) = cost_fom("nuclear",v,r,t) ;
+cost_fom_nuclear_stor_p(i,v,r,t)$nuclear_stor(i) = plant_char("nuclear",v,t,'fom') ;
 
 * Assign hybrid nuclear+storage storage to have the same value as the storage technology in stortech_nuclear_stor_config
 parameter cost_fom_nuclear_stor_s(i,v,r,t) "--2004$/MW-- fixed OM for storage portion of hybrid nuclear+storage" ;
-cost_fom_nuclear_stor_s(i,v,r,t)$nuclear_stor(i) = sum{i_stor$ nuclear_stor_stortech(i,i_stor), cost_fom(i_stor,v,r,t)};
+cost_fom_nuclear_stor_s(i,v,r,t)$nuclear_stor(i) = sum{i_stor$ nuclear_stor_stortech(i,i_stor), plant_char(i_stor,v,t, 'fom')};
 
 cost_fom(i,v,r,t)$[valcap(i,v,r,t)$nuclear_stor(i)] = cost_fom_nuclear_stor_p(i,v,r,t) + bcr(i) * cost_fom_nuclear_stor_s(i,v,r,t) ;
 

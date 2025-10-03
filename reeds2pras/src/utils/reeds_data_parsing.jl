@@ -831,7 +831,7 @@ function process_storages(
         # as per discussion w/ patrick, find duration of storage, then make
         # energy capacity on that duration?
         int_duration = round(energy_capacity_df[idx, "MWh_sum"] / row.MW)
-        if string(row.i) in battery_types or string(row.i) in tes_types
+        if string(row.i) in battery_types || string(row.i) in tes_types
             push!(
                 storages_array,
                 Battery(
@@ -1100,9 +1100,20 @@ function add_new_capacity!(
                         try
                             avg_unit_cap = unitsize_dict[match(r"(.+)_\d+", tech)[1]]
                         catch
-                            # Finally, if still no match, tech is likely "csp{CSP_Type}_{class}"
-                            avg_unit_cap = unitsize_dict[match(r"(.+)\d_\d", tech)[1]]
-                            # will fail if this last thing doesn't work!
+                            try
+                                # if still no match, tech is likely "csp{CSP_Type}_{class}"
+                                avg_unit_cap = unitsize_dict[match(r"(.+)\d_\d", tech)[1]]
+                            catch
+                                try
+                                    # Finally, if still no match, tech is likely "nuclear_stor{NuclearStor_type}" or "nuclear-smr_stor{NuclearSMRStor_type}"
+                                    avg_unit_cap = unitsize_dict[match(r"(.+)-stor\d+", tech)[1]]
+                                    # will fail if this last thing doesn't work!
+                                    # if you need to add a new technology that doesn't work in unitsize.csv like with csp or wind, you need to add
+                                    # another level to this monsterous try-catch ladder
+                                catch
+                                    error("Could not find a match for tech $tech in unitsize_dict")
+                                end
+                            end
                         end
                     end
                 end
