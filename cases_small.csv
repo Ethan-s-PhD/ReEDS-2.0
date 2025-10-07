@@ -1,6 +1,6 @@
 ,nuclear_stor_small
 timetype,seq
-endyear,2050
+endyear,2040
 GSw_Region,st/UT
 GSw_BatteryMandate,0
 GSw_Biopower,0
@@ -19,7 +19,7 @@ GSw_LfillGas,0
 GSw_MinCF,0
 GSw_Mingen,0
 GSw_MinLoading,0
-GSw_TES,1
+GSw_TES,0
 plantchar_tes,tes_ATB_2024_moderate
 GSw_Nuclear,1
 GSw_NuclearStor,1
