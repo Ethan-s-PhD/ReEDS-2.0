@@ -42,6 +42,7 @@ techmarkers = {
 
     'pumped-hydro': (8,1,0),
     'battery_li': (4,1,0),
+    'tes_ms': (4,1,0),
 
     'hydro': 's',
     'nuclear': 'p', # '☢️',
@@ -74,7 +75,7 @@ def simplify_techs(techs, condense_upgrades=True):
     tech_map = pd.read_csv(
         os.path.join(reeds_path,'postprocessing','bokehpivot','in','reeds2','tech_map.csv'))
     tech_map.raw = tech_map.raw.map(
-        lambda x: x if x.startswith('battery') else x.strip('_01234567890*')).str.lower()
+        lambda x: x if x.startswith('battery') or x.startswith('tes') else x.strip('_01234567890*')).str.lower()
     tech_map = tech_map.drop_duplicates().set_index('raw').display.str.lower()
 
     ### Get the unique techs
@@ -2212,6 +2213,7 @@ def animate_dispatch(
         **{f'upv_{i}': 'pv' for i in range(1,11)},
         **{
             'battery_li':'battery',
+            'tes_ms':'tes',
             'distpv':'pv',
             'lfill-gas':'biopower',
             'Nuclear':'nuclear',
@@ -2243,7 +2245,8 @@ def animate_dispatch(
         'wind-ons': bokehcolors['wind-ons'],
         'wind-ofs': bokehcolors['wind-ofs'],
         'pv': bokehcolors['upv'],
-        'battery_li': bokehcolors['battery_li'],
+    'battery_li': bokehcolors['battery_li'],
+    'tes_ms': bokehcolors['tes_ms'],
         'pumped-hydro': bokehcolors['pumped-hydro'],
     }
 
@@ -2635,7 +2638,7 @@ def map_agg(
     tech_map = pd.read_csv(
         os.path.join(reeds_path,'postprocessing','bokehpivot','in','reeds2','tech_map.csv'))
     tech_map.raw = tech_map.raw.map(
-        lambda x: x if x.startswith('battery') else x.strip('_01234567890*'))
+        lambda x: x if x.startswith('battery') or x.startswith('tes') else x.strip('_01234567890*'))
     tech_map = tech_map.drop_duplicates().set_index('raw').display
 
     ### Get outputs
@@ -2659,7 +2662,7 @@ def map_agg(
     val_agg = val.copy()
     ## Use reduced technology set
     val_agg.i = val_agg.i.map(
-        lambda x: x if x.startswith('battery') else x.strip('_01234567890*')).map(tech_map)
+        lambda x: x if x.startswith('battery') or x.startswith('tes') else x.strip('_01234567890*')).map(tech_map)
     val_agg = val_agg.groupby(['i','aggreg','t'], as_index=False).Value.sum()
 
     ### Get region map
@@ -2798,7 +2801,7 @@ def map_capacity_techs(
         case, year=2050,
         techs=[
             'Utility PV', 'Land-based wind', 'Offshore wind', 'Electrolyzer',
-            'Battery', 'PSH', 'H2 turbine', 'Nuclear',
+            'Battery', 'TES', 'PSH', 'H2 turbine', 'Nuclear',
             'Gas CCS', 'Coal CCS', 'Gas', 'Coal',
         ],
         ncols=4,
@@ -2817,7 +2820,7 @@ def map_capacity_techs(
             ['h2-cc', 'h2-ct', 'gas-cc_h2-cc', 'gas-ct_h2-ct'],
             ['H2 turbine']*20)),
         **{'electrolyzer':'Electrolyzer'},
-        **{'battery_li':'Battery', 'pumped-hydro':'PSH'},
+    **{'battery_li':'Battery', 'tes_ms':'TES', 'pumped-hydro':'PSH'},
         **dict(zip(
             ['gas-cc_gas-cc-ccs_mod','gas-cc_gas-cc-ccs_max',
              'gas-cc-ccs_mod','gas-cc-ccs_max'],
@@ -3508,6 +3511,10 @@ def plot_retire_add(
             list(bokehcolors.keys()).index('battery'):list(bokehcolors.keys()).index('Canada')]
         + list(bokehcolors.keys())[
             list(bokehcolors.keys()).index('wind-ons'):list(bokehcolors.keys()).index('battery')]
+        + list(bokehcolors.keys())[
+            list(bokehcolors.keys()).index('tes'):list(bokehcolors.keys()).index('Canada')]
+        + list(bokehcolors.keys())[
+            list(bokehcolors.keys()).index('wind-ons'):list(bokehcolors.keys()).index('tes')]
         + list(bokehcolors.keys())[list(bokehcolors.keys()).index('Canada'):]
     )
 
@@ -3760,7 +3767,7 @@ def plot_dispatch_yearbymonth(
     tech_map = pd.read_csv(
         os.path.join(reeds_path,'postprocessing','bokehpivot','in','reeds2','tech_map.csv'))
     tech_map.raw = tech_map.raw.map(
-        lambda x: x if x.startswith('battery') else x.strip('_01234567890*'))
+        lambda x: x if x.startswith('battery') or x.startswith('tes') else x.strip('_01234567890*'))
     tech_map = tech_map.drop_duplicates().set_index('raw').display
 
     tech_style = pd.read_csv(
@@ -3782,7 +3789,7 @@ def plot_dispatch_yearbymonth(
     else:
         dfin = reeds.io.read_output(output_path, 'gen_h')
         dfin.i = dfin.i.map(
-            lambda x: x if x.startswith('battery') else x.strip('_01234567890*')
+            lambda x: x if x.startswith('battery') or x.startswith('tes') else x.strip('_01234567890*')
         ).str.lower().map(lambda x: tech_map.get(x,x))
 
     if region is not None:
@@ -3963,7 +3970,7 @@ def plot_interday_soc(
     tech_map = pd.read_csv(
         os.path.join(reeds_path,'postprocessing','bokehpivot','in','reeds2','tech_map.csv'))
     tech_map.raw = tech_map.raw.map(
-        lambda x: x if x.startswith('battery') else x.strip('_01234567890*')).str.lower()
+        lambda x: x if x.startswith('battery') or x.startswith('tes') else x.strip('_01234567890*')).str.lower()
     tech_map = tech_map.drop_duplicates().set_index('raw').display.str.lower()
     tech_style = pd.read_csv(
         os.path.join(reeds_path,'postprocessing','bokehpivot','in','reeds2','tech_style.csv'),
@@ -4099,7 +4106,7 @@ def plot_stressperiod_dispatch(case, tmin=2023, level='country', regions='USA'):
     tech_map = pd.read_csv(
         os.path.join(reeds_path,'postprocessing','bokehpivot','in','reeds2','tech_map.csv'))
     tech_map.raw = tech_map.raw.map(
-        lambda x: x if x.startswith('battery') else x.strip('_01234567890*'))
+        lambda x: x if x.startswith('battery') or x.startswith('tes') else x.strip('_01234567890*'))
     tech_map = tech_map.drop_duplicates().set_index('raw').display
 
     tech_style = pd.read_csv(
@@ -4124,7 +4131,7 @@ def plot_stressperiod_dispatch(case, tmin=2023, level='country', regions='USA'):
     ### Aggregate
     dispatch_agg = gen_h_stress.copy()
     dispatch_agg.i = dispatch_agg.i.map(
-        lambda x: x if x.startswith('battery') else x.strip('_01234567890*')
+        lambda x: x if x.startswith('battery') or x.startswith('tes') else x.strip('_01234567890*')
     ).str.lower().map(lambda x: tech_map.get(x,x))
     dispatch_agg = (
         dispatch_agg.loc[dispatch_agg.r.isin(keepr)]
@@ -5387,7 +5394,7 @@ def get_tech_colors_order(order='fuel_storage_vre'):
     bokehcolors['canada'] = bokehcolors['Canada']
     bokehcolors = bokehcolors.to_dict()
 
-    for i in [f'battery_{d}' for d in [2,4,6,8,10]]+['battery_li','pumped-hydro']:
+    for i in [f'battery_{d}' for d in [2,4,6,8,10]]+['battery_li','tes_ms','pumped-hydro']:
         for j in ['charge','discharge']:
             if i in bokehcolors:
                 bokehcolors[f'{i}|{j}'] = bokehcolors[i]
@@ -5399,7 +5406,7 @@ def get_tech_colors_order(order='fuel_storage_vre'):
             + ['canada','Canada']
             + [
                 k for k in bokehcolors.keys()
-                if any([j in k for j in ['battery','pump','evmc']])
+                if any([j in k for j in ['battery', 'tes', 'pump','evmc']])
             ]
         )
         plotorder += [c for c in bokehcolors.keys() if c not in plotorder]
@@ -5427,7 +5434,7 @@ def separate_charge_discharge(df):
     assert 'MW' in df, "df must have a `MW` column"
     storage_techs = [
         i for i in df.i.unique()
-        if i.startswith('battery') or i.startswith('pumped-hydro')
+        if i.startswith('battery') or i.startswith('tes') or i.startswith('pumped-hydro')
     ]
     df.loc[
         df.i.isin(storage_techs) & (df.MW.round(3) < 0),
