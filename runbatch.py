@@ -1904,12 +1904,14 @@ if __name__ == '__main__':
                         help="Run using debug specifications for slurm on an hpc system")
     parser.add_argument('--cases_per_node', '-p', type=int, default=None,
                         help="Number of ReEDS cases to run concurrently on a single HPC node. "
-                            "If not provided, the user will be prompted to specify it.")
+                            "If not 20, the user will be prompted to specify it.")
 
     args = parser.parse_args()
-
+    from ToApps import to_slack
+    print(to_slack("Starting ReEDS runbatch"))
     main(
         BatchName=args.BatchName, cases_suffix=args.cases_suffix, single=args.single,
         simult_runs=args.simult_runs, forcelocal=args.forcelocal, skip_checks=args.skip_checks,
         debug=args.debug, debugnode=args.debugnode, cases_per_node=args.cases_per_node,
     )
+    print(to_slack("ReEDS runbatch complete"))
