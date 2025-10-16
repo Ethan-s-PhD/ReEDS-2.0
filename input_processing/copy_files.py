@@ -1348,11 +1348,11 @@ def write_miscellaneous_files(
                 ][0:len(sw['GSw_PVB_Types'].split('_'))]}
     ).to_csv(os.path.join(inputs_case, 'pvb_bir.csv'), index=False)
 
-    # pd.DataFrame(
-    #     {'*nuclear-stor_type': [f'nuclear-stor{i}' for i in sw['GSw_NuclearStor_Types'].split('_')],
-    #     'storagetechs': [c.replace('-', '_') for c in sw['GSw_NuclearStor_BCR'].split('_')
-    #             ][0:len(sw['GSw_NuclearStor_Types'].split('_'))]}
-    # ).to_csv(os.path.join(inputs_case, 'nuclear_stor_bcr.csv'), index=False)
+    pd.DataFrame(
+        {'*nuclear-stor_type': [f'nuclear-stor{i}' for i in sw['GSw_NuclearStor_Types'].split('_')],
+        'storagetechs': [c.replace('-', '_') for c in sw['GSw_NuclearStor_BCR'].split('_')
+                ][0:len(sw['GSw_NuclearStor_Types'].split('_'))]}
+    ).to_csv(os.path.join(inputs_case, 'nuclear_stor_bcr.csv'), index=False)
     
     pd.DataFrame(
         {'*nuclear-stor_type': [f'nuclear-stor{i}' for i in sw['GSw_NuclearStor_Types'].split('_')],
@@ -1654,7 +1654,7 @@ def main(reeds_path, inputs_case, NARIS=False):
         sw,
         agglevel_variables
     )
-
+    
     # Write general GAMS files
     # Write GAMS-readable sets to the inputs_case directory
     write_GAMS_sets(runfiles, reeds_path, inputs_case)
